@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-HY-nl5f1.js";import{c as n,f as r,l as i,n as a,o,r as s,t as c,u as l}from"./cosmoz-side-panel-DPMvmBBr.js";var u=e((()=>{})),d,f=e((()=>{a(),d=l(class extends i{update(){return this.state.host}})})),p,m=e((()=>{a(),f(),p=e=>{let t=d(),r=o(()=>new CSSStyleSheet,[]);n(()=>{t.shadowRoot.adoptedStyleSheets=[...t.shadowRoot.adoptedStyleSheets,r]},[]),n(()=>{r.replaceSync(e)},[e])}})),h,g,_,v,y=e((()=>{m(),a(),h=(e,t)=>{let n=parseInt(String(e??t),10);return Number.isNaN(n)?t:n},g=`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_tVzVWY.js";import{c as n,f as r,l as i,n as a,o,r as s,t as c,u as l}from"./cosmoz-side-panel-B5LbXhQB.js";var u=e((()=>{})),d,f=e((()=>{a(),d=l(class extends i{update(){return this.state.host}})})),p,m=e((()=>{a(),f(),p=e=>{let t=d(),r=o(()=>new CSSStyleSheet,[]);n(()=>{t.shadowRoot.adoptedStyleSheets=[...t.shadowRoot.adoptedStyleSheets,r]},[]),n(()=>{r.replaceSync(e)},[e])}})),h,g,_,v,y=e((()=>{m(),a(),h=(e,t)=>{let n=parseInt(String(e??t),10);return Number.isNaN(n)?t:n},g=`
 	.wrapper {
 		--drawer-mode: side;
 	}
@@ -76,7 +76,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-HY-
 	}
 	.main-wrapper::-webkit-scrollbar-thumb,
 	.main-wrapper::-webkit-scrollbar-thumb:hover {
-		background: var(--cosmoz-omnitable-mini-scrollbar-thumb-bg, #aaa);
+		background: #aaa;
 		cursor: pointer;
 	}
 	:host {
