@@ -100,7 +100,7 @@ const style = css`
 	}
 	.main-wrapper::-webkit-scrollbar-thumb,
 	.main-wrapper::-webkit-scrollbar-thumb:hover {
-		background: var(--cosmoz-omnitable-mini-scrollbar-thumb-bg, #aaa);
+		background: #aaa;
 		cursor: pointer;
 	}
 	:host {

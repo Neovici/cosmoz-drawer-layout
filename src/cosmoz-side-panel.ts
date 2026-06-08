@@ -29,7 +29,7 @@ const style = css`
 	}
 	.wrapper::-webkit-scrollbar-thumb,
 	.wrapper::-webkit-scrollbar-thumb:hover {
-		background: var(--cosmoz-omnitable-mini-scrollbar-thumb-bg, #aaa);
+		background: #aaa;
 		cursor: pointer;
 	}
 	@container overlay (min-width: 0) {
