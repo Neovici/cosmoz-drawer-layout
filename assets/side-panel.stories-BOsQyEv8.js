@@ -1,6 +1,6 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-vqTri3qK.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-Cm5-lBGT.js";var o,s,c,l,u,d;e((()=>{n(),i(),r(),a(),o={title:`SidePanel`,component:`cosmoz-side-panel`,tags:[`autodocs`],argTypes:{drawerMode:{control:`select`,options:[`overlay`,`side`],description:`Container mode — set via --_drawer-mode CSS custom property by the parent layout`}},args:{}},s={argTypes:{drawerMode:{control:`select`,options:[`overlay`,`side`]}},args:{drawerMode:`overlay`},render:e=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9QjwDle.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-_DaO3xRh.js";var o,s,c,l,u,d;e((()=>{n(),i(),r(),a(),o={title:`SidePanel`,component:`cosmoz-side-panel`,tags:[`autodocs`],args:{}},s={render:()=>t`
         <div style="width: 300px; height: 400px; border: 1px solid #ddd;">
-            <cosmoz-side-panel style="--_drawer-mode: ${e.drawerMode}">
+            <cosmoz-side-panel>
                 <div style="padding: 16px;">Panel Content</div>
             </cosmoz-side-panel>
         </div>
@@ -109,18 +109,9 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-vqT
             </cosmoz-drawer-layout>
         </div>
     `},s.parameters={...s.parameters,docs:{...s.parameters?.docs,source:{originalSource:`{
-  argTypes: {
-    drawerMode: {
-      control: 'select',
-      options: ['overlay', 'side']
-    }
-  },
-  args: {
-    drawerMode: 'overlay'
-  },
-  render: args => html\`
+  render: () => html\`
         <div style="width: 300px; height: 400px; border: 1px solid #ddd;">
-            <cosmoz-side-panel style="--_drawer-mode: \${args.drawerMode}">
+            <cosmoz-side-panel>
                 <div style="padding: 16px;">Panel Content</div>
             </cosmoz-side-panel>
         </div>
