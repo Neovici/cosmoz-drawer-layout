@@ -996,6 +996,968 @@ export const FinanceDashboard: Story = {
 	`,
 };
 
+const openDocViewer = (event: Event) => {
+	const layout = (event.currentTarget as HTMLElement)
+		.closest('.story-app')
+		?.querySelector('cosmoz-drawer-layout');
+	if (layout) {
+		layout.setAttribute('left-drawer-open', '');
+	}
+};
+
+const openHistory = (event: Event) => {
+	const layout = (event.currentTarget as HTMLElement)
+		.closest('.story-app')
+		?.querySelector('cosmoz-drawer-layout');
+	if (layout) {
+		layout.setAttribute('right-drawer-open', '');
+	}
+};
+
+export const InvoiceOverview: Story = {
+	parameters: {
+		layout: 'fullscreen',
+	},
+	render: () => html`
+		<style>
+			.invoice-story {
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				left: 0;
+				right: 0;
+				--cosmoz-drawer-layout-left-drawer-width: min(480px, 100cqw);
+				--cosmoz-drawer-layout-right-drawer-width: min(380px, 100cqw);
+				background: var(--cz-color-bg-secondary, #f9fafb);
+				color: var(--cz-color-text-primary, #181d27);
+				font-family: var(--cz-font-body, system-ui, sans-serif);
+				box-sizing: border-box;
+			}
+
+			.invoice-story cosmoz-side-panel {
+				--cosmoz-side-panel-border-radius: 12px;
+			}
+
+			/* ─── Document Viewer (left) ─── */
+
+			.inv-doc-viewer {
+				background: var(--cz-color-bg-primary, #fff);
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				gap: calc(var(--cz-spacing, 0.25rem) * 4);
+				height: 100%;
+				overflow: auto;
+				padding: calc(var(--cz-spacing, 0.25rem) * 5);
+			}
+
+			.inv-doc-header {
+				align-items: center;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.inv-doc-header h2 {
+				font-size: var(--cz-text-base, 1rem);
+				font-weight: var(--cz-font-weight-semibold, 600);
+				letter-spacing: -0.01em;
+				margin: 0;
+			}
+
+			.inv-doc-close {
+				align-items: center;
+				background: transparent;
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-lg, 0.625rem);
+				color: var(--cz-color-text-secondary, #414651);
+				cursor: pointer;
+				display: inline-grid;
+				font-size: var(--cz-text-lg, 1.125rem);
+				height: 32px;
+				justify-items: center;
+				width: 32px;
+			}
+
+			.inv-doc-close:hover {
+				background: var(--cz-color-bg-secondary, #f9fafb);
+			}
+
+			.inv-doc-page {
+				background: var(--cz-color-bg-primary, #fff);
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-xl, 0.75rem);
+				box-shadow: var(--cz-shadow-sm, 0 1px 3px rgb(10 13 18 / 0.1));
+				flex: 1;
+				min-height: 0;
+				overflow: hidden;
+				padding: calc(var(--cz-spacing, 0.25rem) * 8);
+				position: relative;
+			}
+
+			.inv-doc-page-header {
+				background: var(--cz-color-bg-brand-solid, #496dac);
+				border-radius: var(--cz-radius-lg, 0.625rem)
+					var(--cz-radius-lg, 0.625rem) 0 0;
+				color: var(--cz-color-white, #fff);
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-semibold, 600);
+				letter-spacing: 0.06em;
+				margin: calc(var(--cz-spacing, 0.25rem) * -8);
+				margin-bottom: calc(var(--cz-spacing, 0.25rem) * 5);
+				padding: calc(var(--cz-spacing, 0.25rem) * 3)
+					calc(var(--cz-spacing, 0.25rem) * 6);
+				text-transform: uppercase;
+			}
+
+			.inv-doc-line {
+				background: var(--cz-color-bg-secondary, #f9fafb);
+				border-radius: 3px;
+				height: 8px;
+				margin-bottom: calc(var(--cz-spacing, 0.25rem) * 2);
+			}
+
+			.inv-doc-line.title {
+				background: var(--cz-color-text-tertiary, #535862);
+				width: 55%;
+			}
+
+			.inv-doc-line.subtitle {
+				width: 40%;
+			}
+
+			.inv-doc-line.body {
+				width: 85%;
+			}
+
+			.inv-doc-line.body.short {
+				width: 60%;
+			}
+
+			.inv-doc-line.table-head {
+				background: var(--cz-color-bg-brand, #dee6f6);
+				width: 35%;
+			}
+
+			.inv-doc-line.table-row {
+				width: 70%;
+			}
+
+			.inv-doc-line.total {
+				background: var(--cz-color-text-tertiary, #535862);
+				width: 30%;
+			}
+
+			.inv-doc-spacer {
+				flex: 1;
+			}
+
+			.inv-doc-page-nav {
+				align-items: center;
+				display: flex;
+				justify-content: center;
+				gap: calc(var(--cz-spacing, 0.25rem) * 2);
+			}
+
+			.inv-doc-page-nav span {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+			}
+
+			.inv-doc-page-dot {
+				background: var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-full, 9999px);
+				height: 8px;
+				width: 8px;
+			}
+
+			.inv-doc-page-dot.active {
+				background: var(--cz-color-bg-brand-solid, #496dac);
+			}
+
+			/* ─── Main Content ─── */
+
+			.inv-main {
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				gap: calc(var(--cz-spacing, 0.25rem) * 6);
+				min-height: 100%;
+				overflow: auto;
+				padding: calc(var(--cz-spacing, 0.25rem) * 8);
+				width: 100%;
+			}
+
+			.inv-topbar {
+				align-items: center;
+				display: flex;
+				gap: calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			.inv-back-btn {
+				align-items: center;
+				background: var(--cz-color-bg-primary, #fff);
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-lg, 0.625rem);
+				color: var(--cz-color-text-secondary, #414651);
+				cursor: pointer;
+				display: inline-grid;
+				font-size: var(--cz-text-lg, 1.125rem);
+				height: 36px;
+				justify-items: center;
+				width: 36px;
+			}
+
+			.inv-back-btn:hover {
+				background: var(--cz-color-bg-secondary, #f9fafb);
+				box-shadow: var(--cz-shadow-xs, 0 1px 2px rgb(10 13 18 / 0.05));
+			}
+
+			.inv-breadcrumb {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+			}
+
+			.inv-breadcrumb a {
+				color: var(--cz-color-text-brand, #496dac);
+				text-decoration: none;
+			}
+
+			.inv-breadcrumb a:hover {
+				text-decoration: underline;
+			}
+
+			.inv-status-badge {
+				background: var(--cz-color-bg-warning, #fffaeb);
+				border-radius: var(--cz-radius-full, 9999px);
+				color: var(--cz-color-bg-warning-solid, #dc6803);
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-semibold, 600);
+				margin-left: auto;
+				padding: calc(var(--cz-spacing, 0.25rem) * 1.5)
+					calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			/* ─── Invoice Header ─── */
+
+			.inv-header-card {
+				background: var(--cz-color-bg-primary, #fff);
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-2XL, 1rem);
+				box-shadow: var(--cz-shadow-xs, 0 1px 2px rgb(10 13 18 / 0.05));
+				padding: calc(var(--cz-spacing, 0.25rem) * 6);
+			}
+
+			.inv-header-card h1,
+			.inv-header-card p {
+				margin: 0;
+			}
+
+			.inv-header-top {
+				align-items: flex-start;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.inv-header-top h1 {
+				font-size: var(--cz-text-xl, 1.25rem);
+				letter-spacing: -0.02em;
+			}
+
+			.inv-header-meta {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+				margin-top: calc(var(--cz-spacing, 0.25rem) * 1);
+			}
+
+			.inv-header-amount {
+				color: var(--cz-color-text-primary, #181d27);
+				font-size: var(--cz-text-2xl, 1.5rem);
+				font-weight: var(--cz-font-weight-bold, 700);
+				letter-spacing: -0.02em;
+				text-align: right;
+			}
+
+			.inv-header-amount-label {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-medium, 500);
+			}
+
+			/* ─── Bill From / Bill To ─── */
+
+			.inv-parties {
+				display: grid;
+				gap: calc(var(--cz-spacing, 0.25rem) * 5);
+				grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+			}
+
+			.inv-party {
+				background: var(--cz-color-bg-primary, #fff);
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-2XL, 1rem);
+				box-shadow: var(--cz-shadow-xs, 0 1px 2px rgb(10 13 18 / 0.05));
+				padding: calc(var(--cz-spacing, 0.25rem) * 5);
+			}
+
+			.inv-party-label {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-semibold, 600);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				margin-bottom: calc(var(--cz-spacing, 0.25rem) * 2);
+			}
+
+			.inv-party-name {
+				font-weight: var(--cz-font-weight-semibold, 600);
+			}
+
+			.inv-party-detail {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+				margin-top: calc(var(--cz-spacing, 0.25rem));
+			}
+
+			.inv-party-detail p {
+				margin: 0;
+			}
+
+			/* ─── Line Items ─── */
+
+			.inv-table-card {
+				background: var(--cz-color-bg-primary, #fff);
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-2XL, 1rem);
+				box-shadow: var(--cz-shadow-xs, 0 1px 2px rgb(10 13 18 / 0.05));
+				padding: calc(var(--cz-spacing, 0.25rem) * 6);
+			}
+
+			.inv-table-card h3 {
+				font-size: var(--cz-text-base, 1rem);
+				letter-spacing: -0.01em;
+				margin: 0 0 calc(var(--cz-spacing, 0.25rem) * 5);
+			}
+
+			.inv-table {
+				border-collapse: collapse;
+				width: 100%;
+			}
+
+			.inv-table th {
+				border-bottom: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-semibold, 600);
+				padding: calc(var(--cz-spacing, 0.25rem) * 2)
+					calc(var(--cz-spacing, 0.25rem) * 3);
+				text-align: left;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+			}
+
+			.inv-table th:last-child {
+				text-align: right;
+			}
+
+			.inv-table td {
+				border-bottom: 1px solid var(--cz-color-border-tertiary, #f5f5f5);
+				padding: calc(var(--cz-spacing, 0.25rem) * 3)
+					calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			.inv-table td:last-child {
+				text-align: right;
+			}
+
+			.inv-table tr:last-child td {
+				border-bottom: 0;
+			}
+
+			.inv-item-name {
+				font-weight: var(--cz-font-weight-medium, 500);
+			}
+
+			.inv-item-desc {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+			}
+
+			.inv-item-qty {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+			}
+
+			.inv-item-amount {
+				font-weight: var(--cz-font-weight-semibold, 600);
+				white-space: nowrap;
+			}
+
+			/* ─── Totals ─── */
+
+			.inv-totals {
+				display: grid;
+				gap: calc(var(--cz-spacing, 0.25rem) * 2);
+				grid-template-columns: auto minmax(60px, auto);
+				justify-content: flex-end;
+				margin-top: calc(var(--cz-spacing, 0.25rem) * 5);
+			}
+
+			.inv-total-label {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+				padding: calc(var(--cz-spacing, 0.25rem) * 1)
+					calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			.inv-total-value {
+				font-weight: var(--cz-font-weight-semibold, 600);
+				padding: calc(var(--cz-spacing, 0.25rem) * 1)
+					calc(var(--cz-spacing, 0.25rem) * 3);
+				text-align: right;
+			}
+
+			.inv-total-row-final {
+				border-top: 2px solid var(--cz-color-border-secondary, #e9eaeb);
+				margin-top: calc(var(--cz-spacing, 0.25rem) * 1);
+			}
+
+			.inv-total-row-final .inv-total-label,
+			.inv-total-row-final .inv-total-value {
+				color: var(--cz-color-text-primary, #181d27);
+				font-size: var(--cz-text-base, 1rem);
+				font-weight: var(--cz-font-weight-bold, 700);
+				padding-top: calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			/* ─── Action Bar ─── */
+
+			.inv-actions {
+				align-items: center;
+				background: var(--cz-color-bg-primary, #fff);
+				border: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				border-radius: var(--cz-radius-2XL, 1rem);
+				box-shadow: var(--cz-shadow-xs, 0 1px 2px rgb(10 13 18 / 0.05));
+				display: flex;
+				gap: calc(var(--cz-spacing, 0.25rem) * 3);
+				padding: calc(var(--cz-spacing, 0.25rem) * 4)
+					calc(var(--cz-spacing, 0.25rem) * 5);
+			}
+
+			.inv-btn {
+				align-items: center;
+				border: 1px solid var(--cz-color-border-primary, #d5d7da);
+				border-radius: var(--cz-radius-full, 9999px);
+				cursor: pointer;
+				display: inline-flex;
+				font: inherit;
+				font-weight: var(--cz-font-weight-semibold, 600);
+				font-size: var(--cz-text-sm, 0.875rem);
+				gap: calc(var(--cz-spacing, 0.25rem) * 2);
+				padding: calc(var(--cz-spacing, 0.25rem) * 2.5)
+					calc(var(--cz-spacing, 0.25rem) * 4);
+				transition:
+					box-shadow 0.15s ease,
+					transform 0.15s ease;
+			}
+
+			.inv-btn:hover {
+				box-shadow: var(--cz-shadow-sm, 0 1px 3px rgb(10 13 18 / 0.1));
+				transform: translateY(-1px);
+			}
+
+			.inv-btn-secondary {
+				background: var(--cz-color-bg-primary, #fff);
+				color: var(--cz-color-text-secondary, #414651);
+			}
+
+			.inv-btn-approve {
+				background: var(--cz-color-bg-brand-solid, #496dac);
+				border-color: var(--cz-color-bg-brand-solid, #496dac);
+				color: var(--cz-color-white, #fff);
+			}
+
+			.inv-btn-approve:hover {
+				background: #3d5f99;
+			}
+
+			/* ─── History Panel (right) ─── */
+
+			.inv-history-panel {
+				background: var(--cz-color-bg-primary, #fff);
+				box-sizing: border-box;
+				display: flex;
+				flex-direction: column;
+				gap: calc(var(--cz-spacing, 0.25rem) * 6);
+				height: 100%;
+				overflow: auto;
+				padding: calc(var(--cz-spacing, 0.25rem) * 6);
+			}
+
+			.inv-history-header {
+				align-items: center;
+				display: flex;
+				justify-content: space-between;
+			}
+
+			.inv-history-header h2,
+			.inv-history-header p {
+				margin: 0;
+			}
+
+			.inv-history-header h2 {
+				font-size: var(--cz-text-lg, 1.125rem);
+				letter-spacing: -0.01em;
+			}
+
+			/* ─── Status Timeline ─── */
+
+			.inv-timeline {
+				display: grid;
+				gap: 0;
+			}
+
+			.inv-timeline-step {
+				align-items: start;
+				display: grid;
+				gap: calc(var(--cz-spacing, 0.25rem) * 4);
+				grid-template-columns: 28px 1fr;
+				padding-bottom: calc(var(--cz-spacing, 0.25rem) * 4);
+				position: relative;
+			}
+
+			.inv-timeline-step:last-child {
+				padding-bottom: 0;
+			}
+
+			.inv-timeline-marker {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				position: relative;
+			}
+
+			.inv-timeline-dot {
+				align-items: center;
+				border-radius: var(--cz-radius-full, 9999px);
+				display: inline-grid;
+				flex-shrink: 0;
+				font-size: var(--cz-text-xs, 0.75rem);
+				height: 24px;
+				justify-items: center;
+				width: 24px;
+				z-index: 1;
+			}
+
+			.inv-timeline-dot.done {
+				background: var(--cz-color-bg-success, #ecfdf3);
+				color: var(--cz-color-text-success, #067647);
+			}
+
+			.inv-timeline-dot.current {
+				background: var(--cz-color-bg-brand, #dee6f6);
+				color: var(--cz-color-text-brand, #496dac);
+				box-shadow: 0 0 0 3px var(--cz-color-bg-brand, #dee6f6);
+			}
+
+			.inv-timeline-dot.pending {
+				background: var(--cz-color-bg-tertiary, #f2f4f7);
+				color: var(--cz-color-text-tertiary, #535862);
+			}
+
+			.inv-timeline-line {
+				background: var(--cz-color-border-secondary, #e9eaeb);
+				flex: 1;
+				width: 2px;
+			}
+
+			.inv-timeline-step.done .inv-timeline-line {
+				background: var(--cz-color-text-success, #067647);
+			}
+
+			.inv-timeline-step:last-child .inv-timeline-line {
+				display: none;
+			}
+
+			.inv-timeline-content p {
+				margin: 0;
+			}
+
+			.inv-timeline-title {
+				font-weight: var(--cz-font-weight-medium, 500);
+			}
+
+			.inv-timeline-date {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-xs, 0.75rem);
+				margin-top: calc(var(--cz-spacing, 0.25rem) * 0.5);
+			}
+
+			/* ─── Activity Feed ─── */
+
+			.inv-activity-title {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-semibold, 600);
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+			}
+
+			.inv-activity-list {
+				display: flex;
+				flex-direction: column;
+				gap: calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			.inv-activity-item {
+				align-items: flex-start;
+				display: flex;
+				gap: calc(var(--cz-spacing, 0.25rem) * 3);
+			}
+
+			.inv-activity-avatar {
+				align-items: center;
+				background: var(--cz-color-bg-brand, #dee6f6);
+				border-radius: var(--cz-radius-full, 9999px);
+				color: var(--cz-color-text-brand, #496dac);
+				flex-shrink: 0;
+				font-size: var(--cz-text-xs, 0.75rem);
+				font-weight: var(--cz-font-weight-bold, 700);
+				height: 32px;
+				width: 32px;
+				display: inline-grid;
+				justify-items: center;
+			}
+
+			.inv-activity-body {
+				flex: 1;
+			}
+
+			.inv-activity-body p {
+				margin: 0;
+			}
+
+			.inv-activity-name {
+				font-weight: var(--cz-font-weight-medium, 500);
+			}
+
+			.inv-activity-action {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+			}
+
+			.inv-activity-time {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-xs, 0.75rem);
+				margin-top: calc(var(--cz-spacing, 0.25rem) * 0.5);
+			}
+
+			/* ─── Utility ─── */
+
+			.inv-muted {
+				color: var(--cz-color-text-tertiary, #535862);
+				font-size: var(--cz-text-sm, 0.875rem);
+			}
+
+			@media (max-width: 768px) {
+				.inv-parties {
+					grid-template-columns: 1fr;
+				}
+
+				.inv-main {
+					padding: calc(var(--cz-spacing, 0.25rem) * 5);
+				}
+
+				.inv-actions {
+					flex-wrap: wrap;
+				}
+			}
+		</style>
+
+		<div class="story-app invoice-story">
+			<cosmoz-drawer-layout breakpoint="1200" @close=${closeDrawer}>
+				<cosmoz-side-panel slot="left" bordered>
+					<div class="inv-doc-viewer">
+						<div class="inv-doc-header">
+							<h2>INV-2026-0482.pdf</h2>
+							<button
+								class="inv-doc-close"
+								type="button"
+								@click=${closeDrawer}
+								aria-label="Close document viewer"
+							>
+								&#10005;
+							</button>
+						</div>
+						<div class="inv-doc-page">
+							<div class="inv-doc-page-header">Acme Corp &mdash; Invoice</div>
+							<div class="inv-doc-line title"></div>
+							<div class="inv-doc-line subtitle"></div>
+							<div
+								style="margin-top: calc(var(--cz-spacing, 0.25rem) * 4);"
+							></div>
+							<div class="inv-doc-line table-head"></div>
+							<div class="inv-doc-line table-row"></div>
+							<div class="inv-doc-line table-row"></div>
+							<div class="inv-doc-line table-row"></div>
+							<div
+								style="margin-top: calc(var(--cz-spacing, 0.25rem) * 3);"
+							></div>
+							<div class="inv-doc-line body"></div>
+							<div class="inv-doc-line body short"></div>
+							<div class="inv-doc-spacer"></div>
+							<div class="inv-doc-line total"></div>
+						</div>
+						<div class="inv-doc-page-nav">
+							<div class="inv-doc-page-dot active"></div>
+							<div class="inv-doc-page-dot"></div>
+							<div class="inv-doc-page-dot"></div>
+							<span>Page 1 of 3</span>
+						</div>
+					</div>
+				</cosmoz-side-panel>
+
+				<main class="inv-main">
+					<header class="inv-topbar">
+						<button class="inv-back-btn" type="button" aria-label="Go back">
+							&#8592;
+						</button>
+						<span class="inv-breadcrumb">
+							<a href="#">Invoices</a> &rsaquo; INV-2026-0482
+						</span>
+						<span class="inv-status-badge">&#9203; Pending Approval</span>
+					</header>
+
+					<section class="inv-header-card">
+						<div class="inv-header-top">
+							<div>
+								<h1>Invoice INV-2026-0482</h1>
+								<p class="inv-muted">
+									Issued June 2, 2026 &middot; Due June 30, 2026
+								</p>
+							</div>
+							<div style="text-align: right;">
+								<div class="inv-header-amount-label">Amount Due</div>
+								<div class="inv-header-amount">$14,382.50</div>
+							</div>
+						</div>
+					</section>
+
+					<section class="inv-parties">
+						<div class="inv-party">
+							<div class="inv-party-label">From</div>
+							<div class="inv-party-name">Acme Corporation</div>
+							<div class="inv-party-detail">
+								<p>123 Commerce Blvd</p>
+								<p>San Francisco, CA 94102</p>
+								<p>billing@acmecorp.com</p>
+							</div>
+						</div>
+						<div class="inv-party">
+							<div class="inv-party-label">Bill To</div>
+							<div class="inv-party-name">Nebula Systems Ltd</div>
+							<div class="inv-party-detail">
+								<p>456 Innovation Drive</p>
+								<p>Austin, TX 73301</p>
+								<p>ap@nebulasystems.io</p>
+							</div>
+						</div>
+					</section>
+
+					<section class="inv-table-card">
+						<h3>Line Items</h3>
+						<table class="inv-table">
+							<thead>
+								<tr>
+									<th>Description</th>
+									<th>Qty</th>
+									<th>Rate</th>
+									<th>Amount</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<div class="inv-item-name">
+											Platform license &mdash; annual
+										</div>
+										<div class="inv-item-desc">Enterprise tier, 50 seats</div>
+									</td>
+									<td class="inv-item-qty">1</td>
+									<td class="inv-item-qty">$9,600.00</td>
+									<td class="inv-item-amount">$9,600.00</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="inv-item-name">Consulting &amp; onboarding</div>
+										<div class="inv-item-desc">40 hours @ $85/hr</div>
+									</td>
+									<td class="inv-item-qty">40</td>
+									<td class="inv-item-qty">$85.00</td>
+									<td class="inv-item-amount">$3,400.00</td>
+								</tr>
+								<tr>
+									<td>
+										<div class="inv-item-name">Premium support add-on</div>
+										<div class="inv-item-desc">24/7 coverage, 1-year term</div>
+									</td>
+									<td class="inv-item-qty">1</td>
+									<td class="inv-item-qty">$1,200.00</td>
+									<td class="inv-item-amount">$1,200.00</td>
+								</tr>
+							</tbody>
+						</table>
+						<div class="inv-totals">
+							<span class="inv-total-label">Subtotal</span>
+							<span class="inv-total-value">$14,200.00</span>
+							<span class="inv-total-label">Tax (8.25%)</span>
+							<span class="inv-total-value">$1,171.50</span>
+							<span class="inv-total-label">Discount</span>
+							<span
+								class="inv-total-value"
+								style="color: var(--cz-color-text-success, #067647);"
+								>-$989.00</span
+							>
+							<div
+								class="inv-total-row-final"
+								style="grid-column: 1 / -1;"
+							></div>
+							<span class="inv-total-label">Total Due</span>
+							<span class="inv-total-value">$14,382.50</span>
+						</div>
+					</section>
+
+					<div class="inv-actions">
+						<button
+							class="inv-btn inv-btn-secondary"
+							type="button"
+							@click=${openDocViewer}
+						>
+							&#128196; View Document
+						</button>
+						<button
+							class="inv-btn inv-btn-secondary"
+							type="button"
+							@click=${openHistory}
+						>
+							&#128340; History
+						</button>
+						<span style="flex: 1;"></span>
+						<button class="inv-btn inv-btn-approve" type="button">
+							&#10003; Approve
+						</button>
+					</div>
+				</main>
+
+				<cosmoz-side-panel slot="right" bordered>
+					<aside class="inv-history-panel" aria-label="Invoice history">
+						<div class="inv-history-header">
+							<h2>History &amp; Activity</h2>
+						</div>
+
+						<div class="inv-activity-title">Status</div>
+						<div class="inv-timeline">
+							<div class="inv-timeline-step done">
+								<div class="inv-timeline-marker">
+									<span class="inv-timeline-dot done">&#10003;</span>
+									<div class="inv-timeline-line"></div>
+								</div>
+								<div class="inv-timeline-content">
+									<p class="inv-timeline-title">Draft created</p>
+									<p class="inv-timeline-date">May 28, 2026 &middot; 4:12 PM</p>
+								</div>
+							</div>
+							<div class="inv-timeline-step done">
+								<div class="inv-timeline-marker">
+									<span class="inv-timeline-dot done">&#10003;</span>
+									<div class="inv-timeline-line"></div>
+								</div>
+								<div class="inv-timeline-content">
+									<p class="inv-timeline-title">Sent to Nebula Systems</p>
+									<p class="inv-timeline-date">May 29, 2026 &middot; 9:30 AM</p>
+								</div>
+							</div>
+							<div class="inv-timeline-step">
+								<div class="inv-timeline-marker">
+									<span class="inv-timeline-dot current">&#9679;</span>
+									<div class="inv-timeline-line"></div>
+								</div>
+								<div class="inv-timeline-content">
+									<p class="inv-timeline-title">Under review</p>
+									<p class="inv-timeline-date">Jun 1, 2026 &middot; 11:45 AM</p>
+								</div>
+							</div>
+							<div class="inv-timeline-step">
+								<div class="inv-timeline-marker">
+									<span class="inv-timeline-dot pending">&#9675;</span>
+								</div>
+								<div class="inv-timeline-content">
+									<p
+										class="inv-timeline-title"
+										style="color: var(--cz-color-text-tertiary, #535862);"
+									>
+										Pending approval
+									</p>
+									<p class="inv-timeline-date">Awaiting sign-off</p>
+								</div>
+							</div>
+						</div>
+
+						<div class="inv-activity-title">Activity</div>
+						<div class="inv-activity-list">
+							<div class="inv-activity-item">
+								<div class="inv-activity-avatar">SK</div>
+								<div class="inv-activity-body">
+									<p>
+										<span class="inv-activity-name">Sara K.</span>
+										<span class="inv-activity-action"
+											>marked as &ldquo;under review&rdquo;</span
+										>
+									</p>
+									<p class="inv-activity-time">2 hours ago</p>
+								</div>
+							</div>
+							<div class="inv-activity-item">
+								<div class="inv-activity-avatar">MB</div>
+								<div class="inv-activity-body">
+									<p>
+										<span class="inv-activity-name">Marco B.</span>
+										<span class="inv-activity-action"
+											>updated payment terms to Net 30</span
+										>
+									</p>
+									<p class="inv-activity-time">Yesterday at 3:20 PM</p>
+								</div>
+							</div>
+							<div class="inv-activity-item">
+								<div class="inv-activity-avatar">JL</div>
+								<div class="inv-activity-body">
+									<p>
+										<span class="inv-activity-name">Jon L.</span>
+										<span class="inv-activity-action"
+											>sent invoice via email</span
+										>
+									</p>
+									<p class="inv-activity-time">May 29 at 9:30 AM</p>
+								</div>
+							</div>
+							<div class="inv-activity-item">
+								<div class="inv-activity-avatar">SK</div>
+								<div class="inv-activity-body">
+									<p>
+										<span class="inv-activity-name">Sara K.</span>
+										<span class="inv-activity-action">created draft</span>
+									</p>
+									<p class="inv-activity-time">May 28 at 4:12 PM</p>
+								</div>
+							</div>
+						</div>
+					</aside>
+				</cosmoz-side-panel>
+			</cosmoz-drawer-layout>
+		</div>
+	`,
+};
+
 export const PizzaOrderMap: Story = {
 	parameters: {
 		layout: 'fullscreen',

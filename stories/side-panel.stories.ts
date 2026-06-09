@@ -4,39 +4,21 @@ import type { Meta, StoryObj } from '@storybook/web-components';
 import '../src/cosmoz-drawer-layout';
 import '../src/cosmoz-side-panel';
 
-interface StoryArgs {
-	drawerMode?: string;
-}
-
-const meta: Meta<StoryArgs> = {
+const meta: Meta = {
 	title: 'SidePanel',
 	component: 'cosmoz-side-panel',
 	tags: ['autodocs'],
-	argTypes: {
-		drawerMode: {
-			control: 'select',
-			options: ['overlay', 'side'],
-			description:
-				'Container mode — set via --_drawer-mode CSS custom property by the parent layout',
-		},
-	},
 	args: {},
 };
 
 export default meta;
 
-type Story = StoryObj<StoryArgs>;
+type Story = StoryObj;
 
 export const Default: Story = {
-	argTypes: {
-		drawerMode: { control: 'select', options: ['overlay', 'side'] },
-	},
-	args: {
-		drawerMode: 'overlay',
-	},
-	render: (args) => html`
+	render: () => html`
 		<div style="width: 300px; height: 400px; border: 1px solid #ddd;">
-			<cosmoz-side-panel style="--_drawer-mode: ${args.drawerMode}">
+			<cosmoz-side-panel>
 				<div style="padding: 16px;">Panel Content</div>
 			</cosmoz-side-panel>
 		</div>
