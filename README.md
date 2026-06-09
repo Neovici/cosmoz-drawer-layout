@@ -113,14 +113,14 @@ In overlay mode (inside `cosmoz-drawer-layout`), borders and border-radius are a
 
 These properties only take effect when the `bordered` attribute is set.
 
-| Property                            | Default             | Description    |
-| ----------------------------------- | ------------------- | -------------- |
-| `--cosmoz-side-panel-border-radius` | `16px`              | Panel radius.  |
-| `--cosmoz-side-panel-border-right`  | `1px solid #ebebeb` | Right border.  |
-| `--cosmoz-side-panel-border-left`   | `1px solid #ebebeb` | Left border.   |
-| `--cosmoz-side-panel-border-top`    | `1px solid #ebebeb` | Top border.    |
-| `--cosmoz-side-panel-border-bottom` | `1px solid #ebebeb` | Bottom border. |
-| `--cosmoz-side-panel-margin`        | `0 5px 0 0`         | Panel margin.  |
+| Property                            | Default             | Description                              |
+| ----------------------------------- | ------------------- | ---------------------------------------- |
+| `--cosmoz-side-panel-border-radius` | `16px`              | Panel radius.                            |
+| `--cosmoz-side-panel-border-right`  | `1px solid #ebebeb` | Right border.                            |
+| `--cosmoz-side-panel-border-left`   | `1px solid #ebebeb` | Left border.                             |
+| `--cosmoz-side-panel-border-top`    | `1px solid #ebebeb` | Top border.                              |
+| `--cosmoz-side-panel-border-bottom` | `1px solid #ebebeb` | Bottom border.                           |
+| `--cosmoz-side-panel-margin`        | `5px`               | Panel padding (applied when `bordered`). |
 
 ### Styling drawers
 
