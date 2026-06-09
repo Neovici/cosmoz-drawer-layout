@@ -1,181 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_tVzVWY.js";import{c as n,f as r,l as i,n as a,o,r as s,t as c,u as l}from"./cosmoz-side-panel-B5LbXhQB.js";var u=e((()=>{})),d,f=e((()=>{a(),d=l(class extends i{update(){return this.state.host}})})),p,m=e((()=>{a(),f(),p=e=>{let t=d(),r=o(()=>new CSSStyleSheet,[]);n(()=>{t.shadowRoot.adoptedStyleSheets=[...t.shadowRoot.adoptedStyleSheets,r]},[]),n(()=>{r.replaceSync(e)},[e])}})),h,g,_,v,y=e((()=>{m(),a(),h=(e,t)=>{let n=parseInt(String(e??t),10);return Number.isNaN(n)?t:n},g=`
-	.wrapper {
-		--drawer-mode: side;
-	}
-
-	.side-left,
-	.side-right {
-		position: static;
-		box-shadow: none;
-		z-index: unset;
-	}
-
-	:host(:is([left-drawer-open], [right-drawer-open])) .click-layer {
-		display: none;
-	}
-
-	:host([left-drawer-open]) {
-		--left-drawer-current-width: var(--left-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
-	}
-
-	:host([right-drawer-open]) {
-		--right-drawer-current-width: var(--right-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
-	}
-`,_=e=>{let n=h(e.breakpoint,1460);return p(r`
-		${n>0?`@container (min-width: ${n}px) {${g}}`:g}
-	`),t`
-		<div class="wrapper">
-			<slot name="left" class="side side-left"></slot>
-			<div class="main-wrapper">
-				<div
-					class="click-layer"
-					@click=${()=>e.dispatchEvent(new CustomEvent(`close`))}
-				></div>
-				<slot class="main" part="main"></slot>
-			</div>
-			<slot name="right" class="side side-right"></slot>
-		</div>
-	`},v=r`
-	.click-layer {
-		position: absolute;
-		z-index: 999;
-		inset: 0;
-		background: var(--cosmoz-drawer-layout-backdrop-color, rgba(0, 0, 0, 0.3));
-		transition:
-			display 0.2s allow-discrete,
-			opacity 0.2s;
-		display: none;
-		opacity: 0;
-	}
-
-	:host(:is([left-drawer-open], [right-drawer-open])) .click-layer {
-		display: block;
-		opacity: 1;
-	}
-
-	@starting-style {
-		:host(:is([left-drawer-open], [right-drawer-open])) .click-layer {
-			opacity: 0;
-		}
-	}
-
-	.main-wrapper {
-		display: flex;
-		flex: 1 1 auto;
-		overflow: hidden auto;
-		position: relative;
-	}
-	.main-wrapper::-webkit-scrollbar {
-		width: 4px;
-	}
-	.main-wrapper::-webkit-scrollbar-track {
-		background: transparent;
-		cursor: pointer;
-	}
-	.main-wrapper::-webkit-scrollbar-thumb,
-	.main-wrapper::-webkit-scrollbar-thumb:hover {
-		background: #aaa;
-		cursor: pointer;
-	}
-	:host {
-		display: block;
-		width: 100%;
-		height: 100%;
-		min-height: 0;
-
-		contain: paint;
-		container-type: inline-size;
-
-		--left-drawer-width: var(
-			--cosmoz-drawer-layout-left-drawer-width,
-			min(400px, 100cqw)
-		);
-		--left-drawer-current-width: 0px;
-
-		--right-drawer-width: var(
-			--cosmoz-drawer-layout-right-drawer-width,
-			min(400px, 100cqw)
-		);
-		--right-drawer-current-width: 0px;
-
-		margin: 0 auto;
-	}
-
-	:host([left-drawer-open]) {
-		--left-drawer-current-width: var(--left-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
-	}
-
-	:host([right-drawer-open]) {
-		--right-drawer-current-width: var(--right-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
-	}
-
-	.wrapper {
-		display: flex;
-		justify-content: center;
-		box-sizing: border-box;
-		width: 100%;
-		height: 100%;
-		--drawer-mode: overlay;
-	}
-
-	.side {
-		position: fixed;
-		display: block;
-		flex: none;
-		min-width: 0;
-		height: 100%;
-		transition: width 0.2s ease-in-out;
-		contain: paint;
-		max-width: 100cqw;
-		box-sizing: border-box;
-		background: var(--primary-background-color, #fff);
-		z-index: 1000;
-	}
-
-	.side-left {
-		left: 0;
-		width: var(--left-drawer-current-width, 0);
-		box-shadow:
-			-6px 0px 16px rgba(16, 24, 40, 0.06),
-			-1px 0px 8px rgba(16, 24, 40, 0.1);
-	}
-
-	.side-right {
-		right: 0;
-		order: 1;
-		width: var(--right-drawer-current-width, 0);
-		box-shadow:
-			6px 0px 16px rgba(16, 24, 40, 0.06),
-			1px 0px 8px rgba(16, 24, 40, 0.1);
-	}
-
-	:host([left-drawer-open]) .side-left {
-		margin-right: var(--cosmoz-drawer-layout-gap, var(--cz-spacing));
-	}
-
-	:host([right-drawer-open]) .side-right {
-		margin-left: var(--cosmoz-drawer-layout-gap, var(--cz-spacing));
-	}
-
-	.main {
-		display: flex;
-		flex: 1 1 auto;
-	}
-
-	::slotted([slot='left']) {
-		width: var(--left-drawer-width);
-		transition: width 0.2s ease-in-out;
-	}
-
-	::slotted([slot='right']) {
-		width: var(--right-drawer-width);
-		transition: width 0.2s ease-in-out;
-	}
-`,customElements.define(`cosmoz-drawer-layout`,s(_,{styleSheets:[v],observedAttributes:[`breakpoint`]}))})),b,x,S,C,w,T,E,D,O,k,A,j,M,N;e((()=>{u(),a(),y(),c(),{fn:b}=__STORYBOOK_MODULE_TEST__,x={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:b()}},S=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},C=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},w=C(`left-drawer-open`),T=C(`right-drawer-open`),E=e=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVfikaYd.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-B4iVBNUa.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y;e((()=>{n(),i(),r(),a(),{fn:o}=__STORYBOOK_MODULE_TEST__,s={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:o()}},c=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},l=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},u=l(`left-drawer-open`),d=l(`right-drawer-open`),f=e=>t`
     <cosmoz-drawer-layout
         breakpoint=${e.breakpoint}
         ?left-drawer-open=${e.leftDrawerOpen}
@@ -191,7 +14,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
             <div style="padding: 16px;">Right Drawer Content</div>
         </cosmoz-side-panel>
     </cosmoz-drawer-layout>
-`,D={render:E},O={args:{breakpoint:0,leftDrawerOpen:!0,rightDrawerOpen:!1},render:E},k=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.add(`is-nav-collapsed`)},A=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.remove(`is-nav-collapsed`)},j={parameters:{layout:`fullscreen`},render:()=>t`
+`,p={render:f},m={args:{breakpoint:0,leftDrawerOpen:!0,rightDrawerOpen:!1},render:f},h=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.add(`is-nav-collapsed`)},g=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.remove(`is-nav-collapsed`)},_={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .finance-story {
                 position: absolute;
@@ -211,26 +34,18 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                 --cosmoz-drawer-layout-left-drawer-width: 60px;
             }
 
-            .finance-story cosmoz-side-panel {
-                --drawer-margin: 0;
-                --drawer-border-radius: 0;
-                --drawer-border-top: 0;
-                --drawer-border-bottom: 0;
+            .finance-story cosmoz-side-panel[slot='left']::part(panel) {
+                border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+                background: var(--fin-nav-bg, #101828);
             }
 
             .finance-story cosmoz-side-panel[slot='left'] {
-                --drawer-border-right: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-left: 0;
-                background: var(--fin-nav-bg, #101828);
                 color: var(--cz-color-white, #fff);
                 min-height: 100vh;
             }
 
-            .finance-story cosmoz-side-panel[slot='right'] {
-                --drawer-border-left: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-right: 0;
+            .finance-story cosmoz-side-panel[slot='right']::part(panel) {
+                border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
                 background: transparent;
             }
 
@@ -855,7 +670,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
             <cosmoz-drawer-layout
                 breakpoint="1200"
                 left-drawer-open
-                @close=${S}
+                @close=${c}
             >
                 <cosmoz-side-panel slot="left">
                     <nav class="fin-nav" aria-label="Finance navigation">
@@ -902,7 +717,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                         <button
                             class="fin-nav-collapse-btn"
                             type="button"
-                            @click=${k}
+                            @click=${h}
                         >
                             <span class="fin-nav-icon">&#8592;</span>
                             <span class="fin-nav-collapse-label">Collapse</span>
@@ -910,7 +725,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                         <button
                             class="fin-nav-expand-btn"
                             type="button"
-                            @click=${A}
+                            @click=${g}
                         >
                             <span class="fin-nav-icon">&#8594;</span>
                             <span class="fin-nav-expand-label">Expand</span>
@@ -924,7 +739,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                             <button
                                 class="fin-hamburger"
                                 type="button"
-                                @click=${w}
+                                @click=${u}
                                 aria-label="Toggle navigation menu"
                             >
                                 &#9776;
@@ -940,7 +755,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                             <button
                                 class="fin-icon-btn"
                                 type="button"
-                                @click=${T}
+                                @click=${d}
                                 aria-label="Open notifications"
                             >
                                 &#128276;
@@ -1080,7 +895,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},M={parameters:{layout:`fullscreen`},render:()=>t`
+    `},v={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .pizza-story {
                 position: absolute;
@@ -1103,23 +918,12 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                 box-sizing: border-box;
             }
 
-            .pizza-story cosmoz-side-panel {
-                --drawer-margin: 0;
-                --drawer-border-radius: 0;
-                --drawer-border-top: 0;
-                --drawer-border-bottom: 0;
+            .pizza-story cosmoz-side-panel[slot='left']::part(panel) {
+                border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
             }
 
-            .pizza-story cosmoz-side-panel[slot='left'] {
-                --drawer-border-right: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-left: 0;
-            }
-
-            .pizza-story cosmoz-side-panel[slot='right'] {
-                --drawer-border-left: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-right: 0;
+            .pizza-story cosmoz-side-panel[slot='right']::part(panel) {
+                border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
             }
 
             .pizza-menu,
@@ -1464,7 +1268,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
         </style>
 
         <div class="story-app pizza-story">
-            <cosmoz-drawer-layout @close=${S}>
+            <cosmoz-drawer-layout @close=${c}>
                 <cosmoz-side-panel slot="left">
                     <aside class="pizza-menu" aria-label="Order menu">
                         <section class="pizza-restaurant">
@@ -1524,14 +1328,14 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                             <button
                                 class="pizza-button-secondary"
                                 type="button"
-                                @click=${w}
+                                @click=${u}
                             >
                                 Order menu
                             </button>
                             <button
                                 class="pizza-button"
                                 type="button"
-                                @click=${T}
+                                @click=${d}
                             >
                                 Show map
                             </button>
@@ -1637,16 +1441,16 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},D.parameters={...D.parameters,docs:{...D.parameters?.docs,source:{originalSource:`{
+    `},p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
   render: renderBasic
-}`,...D.parameters?.docs?.source}}},O.parameters={...O.parameters,docs:{...O.parameters?.docs,source:{originalSource:`{
+}`,...p.parameters?.docs?.source}}},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
   args: {
     breakpoint: 0,
     leftDrawerOpen: true,
     rightDrawerOpen: false
   },
   render: renderBasic
-}`,...O.parameters?.docs?.source}}},j.parameters={...j.parameters,docs:{...j.parameters?.docs,source:{originalSource:`{
+}`,...m.parameters?.docs?.source}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -1670,26 +1474,18 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                 --cosmoz-drawer-layout-left-drawer-width: 60px;
             }
 
-            .finance-story cosmoz-side-panel {
-                --drawer-margin: 0;
-                --drawer-border-radius: 0;
-                --drawer-border-top: 0;
-                --drawer-border-bottom: 0;
+            .finance-story cosmoz-side-panel[slot='left']::part(panel) {
+                border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+                background: var(--fin-nav-bg, #101828);
             }
 
             .finance-story cosmoz-side-panel[slot='left'] {
-                --drawer-border-right: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-left: 0;
-                background: var(--fin-nav-bg, #101828);
                 color: var(--cz-color-white, #fff);
                 min-height: 100vh;
             }
 
-            .finance-story cosmoz-side-panel[slot='right'] {
-                --drawer-border-left: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-right: 0;
+            .finance-story cosmoz-side-panel[slot='right']::part(panel) {
+                border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
                 background: transparent;
             }
 
@@ -2540,7 +2336,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...j.parameters?.docs?.source}}},M.parameters={...M.parameters,docs:{...M.parameters?.docs,source:{originalSource:`{
+}`,..._.parameters?.docs?.source}}},v.parameters={...v.parameters,docs:{...v.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -2567,23 +2363,12 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
                 box-sizing: border-box;
             }
 
-            .pizza-story cosmoz-side-panel {
-                --drawer-margin: 0;
-                --drawer-border-radius: 0;
-                --drawer-border-top: 0;
-                --drawer-border-bottom: 0;
+            .pizza-story cosmoz-side-panel[slot='left']::part(panel) {
+                border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
             }
 
-            .pizza-story cosmoz-side-panel[slot='left'] {
-                --drawer-border-right: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-left: 0;
-            }
-
-            .pizza-story cosmoz-side-panel[slot='right'] {
-                --drawer-border-left: 1px solid
-                    var(--cz-color-border-secondary, #e9eaeb);
-                --drawer-border-right: 0;
+            .pizza-story cosmoz-side-panel[slot='right']::part(panel) {
+                border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
             }
 
             .pizza-menu,
@@ -3102,4 +2887,4 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-B_t
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...M.parameters?.docs?.source}}},N=[`Default`,`AlwaysSideMode`,`FinanceDashboard`,`PizzaOrderMap`]}))();export{O as AlwaysSideMode,D as Default,j as FinanceDashboard,M as PizzaOrderMap,N as __namedExportsOrder,x as default};
+}`,...v.parameters?.docs?.source}}},y=[`Default`,`AlwaysSideMode`,`FinanceDashboard`,`PizzaOrderMap`]}))();export{m as AlwaysSideMode,p as Default,_ as FinanceDashboard,v as PizzaOrderMap,y as __namedExportsOrder,s as default};
