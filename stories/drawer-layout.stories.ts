@@ -996,21 +996,12 @@ export const FinanceDashboard: Story = {
 	`,
 };
 
-const openDocViewer = (event: Event) => {
+const closeLeftDrawer = (event: Event) => {
 	const layout = (event.currentTarget as HTMLElement)
 		.closest('.story-app')
 		?.querySelector('cosmoz-drawer-layout');
 	if (layout) {
-		layout.setAttribute('left-drawer-open', '');
-	}
-};
-
-const openHistory = (event: Event) => {
-	const layout = (event.currentTarget as HTMLElement)
-		.closest('.story-app')
-		?.querySelector('cosmoz-drawer-layout');
-	if (layout) {
-		layout.setAttribute('right-drawer-open', '');
+		layout.removeAttribute('left-drawer-open');
 	}
 };
 
@@ -1682,7 +1673,7 @@ export const InvoiceOverview: Story = {
 							<button
 								class="inv-doc-close"
 								type="button"
-								@click=${closeDrawer}
+								@click=${closeLeftDrawer}
 								aria-label="Close document viewer"
 							>
 								&#10005;
@@ -1830,14 +1821,14 @@ export const InvoiceOverview: Story = {
 						<button
 							class="inv-btn inv-btn-secondary"
 							type="button"
-							@click=${openDocViewer}
+							@click=${toggleLeftDrawer}
 						>
 							&#128196; View Document
 						</button>
 						<button
 							class="inv-btn inv-btn-secondary"
 							type="button"
-							@click=${openHistory}
+							@click=${toggleRightDrawer}
 						>
 							&#128340; History
 						</button>
