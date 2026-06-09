@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9QjwDle.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-_DaO3xRh.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y,b,x,S;e((()=>{n(),i(),r(),a(),{fn:o}=__STORYBOOK_MODULE_TEST__,s={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:o()}},c=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},l=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},u=l(`left-drawer-open`),d=l(`right-drawer-open`),f=e=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CxPht1pR.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-DPPx29xt.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y,b,x;e((()=>{n(),i(),r(),a(),{fn:o}=__STORYBOOK_MODULE_TEST__,s={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:o()}},c=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},l=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},u=l(`left-drawer-open`),d=l(`right-drawer-open`),f=e=>t`
     <cosmoz-drawer-layout
         breakpoint=${e.breakpoint}
         ?left-drawer-open=${e.leftDrawerOpen}
@@ -894,7 +894,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},v=e=>{let t=e.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);t&&t.setAttribute(`left-drawer-open`,``)},y=e=>{let t=e.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);t&&t.setAttribute(`right-drawer-open`,``)},b={parameters:{layout:`fullscreen`},render:()=>t`
+    `},v=e=>{let t=e.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);t&&t.removeAttribute(`left-drawer-open`)},y={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .invoice-story {
                 position: absolute;
@@ -1558,7 +1558,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
                             <button
                                 class="inv-doc-close"
                                 type="button"
-                                @click=${c}
+                                @click=${v}
                                 aria-label="Close document viewer"
                             >
                                 &#10005;
@@ -1706,14 +1706,14 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
                         <button
                             class="inv-btn inv-btn-secondary"
                             type="button"
-                            @click=${v}
+                            @click=${u}
                         >
                             &#128196; View Document
                         </button>
                         <button
                             class="inv-btn inv-btn-secondary"
                             type="button"
-                            @click=${y}
+                            @click=${d}
                         >
                             &#128340; History
                         </button>
@@ -1831,7 +1831,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},x={parameters:{layout:`fullscreen`},render:()=>t`
+    `},b={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .pizza-story {
                 position: absolute;
@@ -3271,7 +3271,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,..._.parameters?.docs?.source}}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+}`,..._.parameters?.docs?.source}}},y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -3939,7 +3939,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
                             <button
                                 class="inv-doc-close"
                                 type="button"
-                                @click=\${closeDrawer}
+                                @click=\${closeLeftDrawer}
                                 aria-label="Close document viewer"
                             >
                                 &#10005;
@@ -4087,14 +4087,14 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
                         <button
                             class="inv-btn inv-btn-secondary"
                             type="button"
-                            @click=\${openDocViewer}
+                            @click=\${toggleLeftDrawer}
                         >
                             &#128196; View Document
                         </button>
                         <button
                             class="inv-btn inv-btn-secondary"
                             type="button"
-                            @click=\${openHistory}
+                            @click=\${toggleRightDrawer}
                         >
                             &#128340; History
                         </button>
@@ -4213,7 +4213,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...b.parameters?.docs?.source}}},x.parameters={...x.parameters,docs:{...x.parameters?.docs,source:{originalSource:`{
+}`,...y.parameters?.docs?.source}}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -4764,4 +4764,4 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-C9Q
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...x.parameters?.docs?.source}}},S=[`Default`,`AlwaysSideMode`,`FinanceDashboard`,`InvoiceOverview`,`PizzaOrderMap`]}))();export{m as AlwaysSideMode,p as Default,_ as FinanceDashboard,b as InvoiceOverview,x as PizzaOrderMap,S as __namedExportsOrder,s as default};
+}`,...b.parameters?.docs?.source}}},x=[`Default`,`AlwaysSideMode`,`FinanceDashboard`,`InvoiceOverview`,`PizzaOrderMap`]}))();export{m as AlwaysSideMode,p as Default,_ as FinanceDashboard,y as InvoiceOverview,b as PizzaOrderMap,x as __namedExportsOrder,s as default};
