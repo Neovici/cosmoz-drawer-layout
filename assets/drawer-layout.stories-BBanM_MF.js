@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVfikaYd.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-B4iVBNUa.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y;e((()=>{n(),i(),r(),a(),{fn:o}=__STORYBOOK_MODULE_TEST__,s={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:o()}},c=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},l=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},u=l(`left-drawer-open`),d=l(`right-drawer-open`),f=e=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-vqTri3qK.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-Cm5-lBGT.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y;e((()=>{n(),i(),r(),a(),{fn:o}=__STORYBOOK_MODULE_TEST__,s={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:o()}},c=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},l=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},u=l(`left-drawer-open`),d=l(`right-drawer-open`),f=e=>t`
     <cosmoz-drawer-layout
         breakpoint=${e.breakpoint}
         ?left-drawer-open=${e.leftDrawerOpen}
@@ -35,7 +35,6 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVf
             }
 
             .finance-story cosmoz-side-panel[slot='left']::part(panel) {
-                border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
                 background: var(--fin-nav-bg, #101828);
             }
 
@@ -45,7 +44,6 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVf
             }
 
             .finance-story cosmoz-side-panel[slot='right']::part(panel) {
-                border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
                 background: transparent;
             }
 
@@ -133,6 +131,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVf
 
             .fin-nav-icon {
                 align-items: center;
+                flex: none;
                 display: inline-grid;
                 font-size: var(--cz-text-lg, 1.125rem);
                 height: 22px;
@@ -1475,7 +1474,6 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVf
             }
 
             .finance-story cosmoz-side-panel[slot='left']::part(panel) {
-                border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
                 background: var(--fin-nav-bg, #101828);
             }
 
@@ -1485,7 +1483,6 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVf
             }
 
             .finance-story cosmoz-side-panel[slot='right']::part(panel) {
-                border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
                 background: transparent;
             }
 
@@ -1573,6 +1570,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{W as t}from"./iframe-CVf
 
             .fin-nav-icon {
                 align-items: center;
+                flex: none;
                 display: inline-grid;
                 font-size: var(--cz-text-lg, 1.125rem);
                 height: 22px;
