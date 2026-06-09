@@ -63,9 +63,12 @@ A responsive layout with left and right drawer slots that switch between **side 
 
 ### CSS Parts
 
-| Part   | Description                                                   |
-| ------ | ------------------------------------------------------------- |
-| `main` | The main content slot wrapper. Selectable via `::part(main)`. |
+| Part           | Description        |
+| -------------- | ------------------ |
+| `main`         | Main content slot. |
+| `left-drawer`  | Left drawer slot.  |
+| `right-drawer` | Right drawer slot. |
+| `backdrop`     | Overlay backdrop.  |
 
 ### CSS Custom Properties
 
@@ -84,7 +87,15 @@ A responsive layout with left and right drawer slots that switch between **side 
 
 ## cosmoz-side-panel
 
-A companion panel element styled by its parent `cosmoz-drawer-layout`. In overlay mode, borders and border-radius are automatically removed for full-bleed drawer appearance.
+A companion panel element for use inside `cosmoz-drawer-layout` slots. By default it renders as a plain container with a white background. Add the `bordered` attribute for a card-like appearance with borders, border-radius, and margin.
+
+In overlay mode (inside `cosmoz-drawer-layout`), borders and border-radius are automatically removed from `bordered` panels for a full-bleed drawer appearance.
+
+### Attributes
+
+| Attribute  | Type    | Description                                                                                                       |
+| ---------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
+| `bordered` | boolean | Adds card-like borders, border-radius, and margin. In overlay mode, borders and radius are automatically removed. |
 
 ### Slots
 
@@ -92,31 +103,52 @@ A companion panel element styled by its parent `cosmoz-drawer-layout`. In overla
 | --------- | -------------- |
 | (default) | Panel content. |
 
+### CSS Parts
+
+| Part    | Description                                                                                                                                                                                                                                        |
+| ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `panel` | The panel wrapper. **Warning:** Setting border or border-radius via `::part(panel)` will suppress automatic overlay-mode zeroing. Use the `bordered` attribute with `--cosmoz-side-panel-*` custom properties for borders that zero automatically. |
+
 ### CSS Custom Properties
 
-| Property                 | Default             | Description     |
-| ------------------------ | ------------------- | --------------- |
-| `--drawer-margin`        | `0 5px 0 0`         | Panel margin.   |
-| `--drawer-border-radius` | `16px`              | Panel radius.   |
-| `--drawer-border-right`  | `1px solid #ebebeb` | Right border.   |
-| `--drawer-border-left`   | `1px solid #ebebeb` | Left border.    |
-| `--drawer-border-top`    | `1px solid #ebebeb` | Top border.     |
-| `--drawer-border-bottom` | `1px solid #ebebeb` | Bottom border.  |
-| `--drawer-overflow`      | `auto`              | Panel overflow. |
+These properties only take effect when the `bordered` attribute is set.
+
+| Property                            | Default             | Description    |
+| ----------------------------------- | ------------------- | -------------- |
+| `--cosmoz-side-panel-border-radius` | `16px`              | Panel radius.  |
+| `--cosmoz-side-panel-border-right`  | `1px solid #ebebeb` | Right border.  |
+| `--cosmoz-side-panel-border-left`   | `1px solid #ebebeb` | Left border.   |
+| `--cosmoz-side-panel-border-top`    | `1px solid #ebebeb` | Top border.    |
+| `--cosmoz-side-panel-border-bottom` | `1px solid #ebebeb` | Bottom border. |
+| `--cosmoz-side-panel-margin`        | `0 5px 0 0`         | Panel margin.  |
 
 ### Styling drawers
 
-Override CSS custom properties to customize drawer appearance:
+For non-border customization (background, overflow, etc.), use `::part(panel)`:
 
 ```css
-cosmoz-drawer-layout {
-	--cosmoz-drawer-layout-left-drawer-width: min(260px, 80cqw);
-	--cosmoz-drawer-layout-gap: 0;
+cosmoz-side-panel::part(panel) {
+	background: var(--cz-color-bg-secondary, #f9fafb);
+	overflow: hidden;
 }
+```
 
-cosmoz-side-panel {
-	--drawer-margin: 0;
-	--drawer-border-radius: 0;
+For side-specific divider borders, use `::part(panel)` on the slotted panel. These borders won't auto-zero in overlay mode — which is typically fine since a single divider line looks acceptable in both modes:
+
+```css
+cosmoz-side-panel[slot='left']::part(panel) {
+	border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+}
+```
+
+For card-like panels with borders that auto-zero in overlay mode, use the `bordered` attribute with CSS custom properties:
+
+```css
+cosmoz-side-panel[bordered] {
+	--cosmoz-side-panel-border-radius: 8px;
+	--cosmoz-side-panel-margin: 0;
+	--cosmoz-side-panel-border-top: 0;
+	--cosmoz-side-panel-border-bottom: 0;
 }
 ```
 

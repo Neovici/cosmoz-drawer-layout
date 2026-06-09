@@ -133,26 +133,18 @@ export const FinanceDashboard: Story = {
 				--cosmoz-drawer-layout-left-drawer-width: 60px;
 			}
 
-			.finance-story cosmoz-side-panel {
-				--drawer-margin: 0;
-				--drawer-border-radius: 0;
-				--drawer-border-top: 0;
-				--drawer-border-bottom: 0;
+			.finance-story cosmoz-side-panel[slot='left']::part(panel) {
+				border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
+				background: var(--fin-nav-bg, #101828);
 			}
 
 			.finance-story cosmoz-side-panel[slot='left'] {
-				--drawer-border-right: 1px solid
-					var(--cz-color-border-secondary, #e9eaeb);
-				--drawer-border-left: 0;
-				background: var(--fin-nav-bg, #101828);
 				color: var(--cz-color-white, #fff);
 				min-height: 100vh;
 			}
 
-			.finance-story cosmoz-side-panel[slot='right'] {
-				--drawer-border-left: 1px solid
-					var(--cz-color-border-secondary, #e9eaeb);
-				--drawer-border-right: 0;
+			.finance-story cosmoz-side-panel[slot='right']::part(panel) {
+				border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
 				background: transparent;
 			}
 
@@ -1032,23 +1024,12 @@ export const PizzaOrderMap: Story = {
 				box-sizing: border-box;
 			}
 
-			.pizza-story cosmoz-side-panel {
-				--drawer-margin: 0;
-				--drawer-border-radius: 0;
-				--drawer-border-top: 0;
-				--drawer-border-bottom: 0;
+			.pizza-story cosmoz-side-panel[slot='left']::part(panel) {
+				border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
 			}
 
-			.pizza-story cosmoz-side-panel[slot='left'] {
-				--drawer-border-right: 1px solid
-					var(--cz-color-border-secondary, #e9eaeb);
-				--drawer-border-left: 0;
-			}
-
-			.pizza-story cosmoz-side-panel[slot='right'] {
-				--drawer-border-left: 1px solid
-					var(--cz-color-border-secondary, #e9eaeb);
-				--drawer-border-right: 0;
+			.pizza-story cosmoz-side-panel[slot='right']::part(panel) {
+				border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
 			}
 
 			.pizza-menu,
