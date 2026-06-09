@@ -6,6 +6,8 @@ const CosmozSidePanel = () =>
 const style = css`
 	:host {
 		display: block;
+		box-sizing: border-box;
+		height: 100%;
 		container-name: var(--_drawer-mode);
 		container-type: size;
 	}
@@ -28,9 +30,12 @@ const style = css`
 		cursor: pointer;
 	}
 
+	:host([bordered]) {
+		padding: var(--cosmoz-side-panel-margin, 5px);
+	}
+
 	:host([bordered]) .wrapper {
 		border-radius: var(--cosmoz-side-panel-border-radius, 16px);
-		margin: var(--cosmoz-side-panel-margin, 0 5px 0 0);
 		border-right: var(--cosmoz-side-panel-border-right, 1px solid #ebebeb);
 		border-left: var(--cosmoz-side-panel-border-left, 1px solid #ebebeb);
 		border-top: var(--cosmoz-side-panel-border-top, 1px solid #ebebeb);

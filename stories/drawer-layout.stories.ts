@@ -134,7 +134,6 @@ export const FinanceDashboard: Story = {
 			}
 
 			.finance-story cosmoz-side-panel[slot='left']::part(panel) {
-				border-right: 1px solid var(--cz-color-border-secondary, #e9eaeb);
 				background: var(--fin-nav-bg, #101828);
 			}
 
@@ -144,7 +143,6 @@ export const FinanceDashboard: Story = {
 			}
 
 			.finance-story cosmoz-side-panel[slot='right']::part(panel) {
-				border-left: 1px solid var(--cz-color-border-secondary, #e9eaeb);
 				background: transparent;
 			}
 
@@ -232,6 +230,7 @@ export const FinanceDashboard: Story = {
 
 			.fin-nav-icon {
 				align-items: center;
+				flex: none;
 				display: inline-grid;
 				font-size: var(--cz-text-lg, 1.125rem);
 				height: 22px;
