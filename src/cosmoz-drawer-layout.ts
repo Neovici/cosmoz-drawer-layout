@@ -25,16 +25,6 @@ const sideModeRules = `
 	:host(:is([left-drawer-open], [right-drawer-open])) .click-layer {
 		display: none;
 	}
-
-	:host([left-drawer-open]) {
-		--_left-drawer-current-width: var(--_left-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
-	}
-
-	:host([right-drawer-open]) {
-		--_right-drawer-current-width: var(--_right-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
-	}
 `;
 
 const CosmozDrawerLayout = (host: Element & Props) => {
@@ -130,12 +120,10 @@ const style = css`
 
 	:host([left-drawer-open]) {
 		--_left-drawer-current-width: var(--_left-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
 	}
 
 	:host([right-drawer-open]) {
 		--_right-drawer-current-width: var(--_right-drawer-width);
-		--cosmoz-drawer-layout-gap: var(--cz-spacing);
 	}
 
 	.wrapper {
