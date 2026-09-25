@@ -59,7 +59,7 @@
     "@changesets/cli": "^2.31.0",
     "@commitlint/cli": "^20.0.0",
     "@commitlint/config-conventional": "^21.0.2",
-    "@neovici/cfg": "^2.8.0",
+    "@neovici/cfg": "^2.15.0",
     "@neovici/testing": "^2.3.0",
     "@playwright/test": "^1.60.0",
     "@storybook/addon-docs": "^10.0.0",
