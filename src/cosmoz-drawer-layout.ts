@@ -3,6 +3,8 @@ import { component, css, html } from '@pionjs/pion';
 
 type Props = {
 	breakpoint?: string;
+	leftDrawerOpen?: boolean;
+	rightDrawerOpen?: boolean;
 };
 
 const parseBreakpoint = (value: string | undefined, fallback: number) => {
@@ -38,7 +40,13 @@ const CosmozDrawerLayout = (host: Element & Props) => {
 
 	return html`
 		<div class="wrapper">
-			<slot name="left" class="side side-left" part="left-drawer"></slot>
+			<div
+				class="side side-left"
+				part="left-drawer"
+				?inert=${!host.hasAttribute('left-drawer-open')}
+			>
+				<slot name="left"></slot>
+			</div>
 			<div class="main-wrapper">
 				<div
 					class="click-layer"
@@ -47,7 +55,13 @@ const CosmozDrawerLayout = (host: Element & Props) => {
 				></div>
 				<slot class="main" part="main"></slot>
 			</div>
-			<slot name="right" class="side side-right" part="right-drawer"></slot>
+			<div
+				class="side side-right"
+				part="right-drawer"
+				?inert=${!host.hasAttribute('right-drawer-open')}
+			>
+				<slot name="right"></slot>
+			</div>
 		</div>
 	`;
 };
@@ -194,7 +208,7 @@ customElements.define(
 	'cosmoz-drawer-layout',
 	component(CosmozDrawerLayout, {
 		styleSheets: [style],
-		observedAttributes: ['breakpoint'],
+		observedAttributes: ['breakpoint', 'left-drawer-open', 'right-drawer-open'],
 	}),
 );
 
