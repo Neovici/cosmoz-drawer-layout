@@ -1,7 +1,7 @@
 import '@neovici/cosmoz-tokens';
 import { html } from '@pionjs/pion';
 import type { Meta, StoryObj } from '@storybook/web-components';
-import { fn } from 'storybook/test';
+import { expect, fn, userEvent, waitFor } from 'storybook/test';
 import '../src/cosmoz-drawer-layout';
 import '../src/cosmoz-side-panel';
 
@@ -2500,4 +2500,46 @@ export const PizzaOrderMap: Story = {
 			</cosmoz-drawer-layout>
 		</div>
 	`,
+};
+
+/** Drawer content must receive pointer hits ahead of the workspace backdrop. */
+export const OverlayInteraction: Story = {
+	render: () =>
+		html` <cosmoz-drawer-layout
+			breakpoint="10000"
+			left-drawer-open
+			style="width: 320px; height: 400px; --cosmoz-drawer-layout-left-drawer-width: 240px; --cosmoz-drawer-layout-right-drawer-width: 240px;"
+		>
+			<nav slot="left"><button>Open invoices</button></nav>
+			<div style="position: absolute; inset: 0">Workspace</div>
+			<aside slot="right"><button>Close assistant</button></aside>
+		</cosmoz-drawer-layout>`,
+	play: async ({ canvasElement }) => {
+		const drawer = canvasElement.querySelector('cosmoz-drawer-layout')!;
+		const left = drawer.querySelector<HTMLButtonElement>('nav button')!;
+		const right = drawer.querySelector<HTMLButtonElement>('aside button')!;
+		const hit = (button: HTMLButtonElement) => {
+			const rect = button.getBoundingClientRect();
+			const x = rect.x + rect.width / 2;
+			const y = rect.y + rect.height / 2;
+			let element = document.elementFromPoint(x, y);
+			while (element?.shadowRoot) {
+				const inner = element.shadowRoot.elementFromPoint(x, y);
+				if (!inner || inner === element) break;
+				element = inner;
+			}
+			return element;
+		};
+		await waitFor(() => expect(hit(left)).toBe(left));
+		await userEvent.click(left);
+		drawer.removeAttribute('left-drawer-open');
+		drawer.setAttribute('right-drawer-open', '');
+		await waitFor(() => expect(hit(right)).toBe(right));
+		await userEvent.click(right);
+		await waitFor(() =>
+			expect(
+				drawer.shadowRoot!.querySelector('[part="left-drawer"]'),
+			).toHaveAttribute('inert'),
+		);
+	},
 };
