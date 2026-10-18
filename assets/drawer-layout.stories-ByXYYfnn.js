@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--uqrdHD7.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-u6w0DMEu.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y,b,x;e((()=>{n(),i(),r(),a(),{fn:o}=__STORYBOOK_MODULE_TEST__,s={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:o()}},c=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},l=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},u=l(`left-drawer-open`),d=l(`right-drawer-open`),f=e=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cvl9in-S.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-BlBSs-aN.js";var o,s,c,l,u,d,f,p,m,h,g,_,v,y,b,x,S,C,w,T;e((()=>{n(),i(),r(),a(),{expect:o,fn:s,userEvent:c,waitFor:l}=__STORYBOOK_MODULE_TEST__,u={title:`DrawerLayout`,component:`cosmoz-drawer-layout`,tags:[`autodocs`],argTypes:{breakpoint:{control:`number`,description:`Width breakpoint (px) for side/overlay switch. 0 = always side mode.`},leftDrawerOpen:{control:`boolean`,description:`Opens the left drawer (overlay mode)`},rightDrawerOpen:{control:`boolean`,description:`Opens the right drawer (overlay mode)`}},args:{breakpoint:1024,leftDrawerOpen:!1,rightDrawerOpen:!1,onClose:s()}},d=e=>{let t=e.currentTarget;t.removeAttribute(`left-drawer-open`),t.removeAttribute(`right-drawer-open`)},f=e=>t=>{let n=t.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);n&&n.toggleAttribute(e,!n.hasAttribute(e))},p=f(`left-drawer-open`),m=f(`right-drawer-open`),h=e=>t`
     <cosmoz-drawer-layout
         breakpoint=${e.breakpoint}
         ?left-drawer-open=${e.leftDrawerOpen}
@@ -14,7 +14,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             <div style="padding: 16px;">Right Drawer Content</div>
         </cosmoz-side-panel>
     </cosmoz-drawer-layout>
-`,p={render:f},m={args:{breakpoint:0,leftDrawerOpen:!0,rightDrawerOpen:!1},render:f},h=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.add(`is-nav-collapsed`)},g=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.remove(`is-nav-collapsed`)},_={parameters:{layout:`fullscreen`},render:()=>t`
+`,g={render:h},_={args:{breakpoint:0,leftDrawerOpen:!0,rightDrawerOpen:!1},render:h},v=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.add(`is-nav-collapsed`)},y=e=>{let t=e.currentTarget.closest(`.finance-story`);t&&t.classList.remove(`is-nav-collapsed`)},b={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .finance-story {
                 position: absolute;
@@ -669,7 +669,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             <cosmoz-drawer-layout
                 breakpoint="1200"
                 left-drawer-open
-                @close=${c}
+                @close=${d}
             >
                 <cosmoz-side-panel slot="left">
                     <nav class="fin-nav" aria-label="Finance navigation">
@@ -716,7 +716,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                         <button
                             class="fin-nav-collapse-btn"
                             type="button"
-                            @click=${h}
+                            @click=${v}
                         >
                             <span class="fin-nav-icon">&#8592;</span>
                             <span class="fin-nav-collapse-label">Collapse</span>
@@ -724,7 +724,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                         <button
                             class="fin-nav-expand-btn"
                             type="button"
-                            @click=${g}
+                            @click=${y}
                         >
                             <span class="fin-nav-icon">&#8594;</span>
                             <span class="fin-nav-expand-label">Expand</span>
@@ -738,7 +738,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                             <button
                                 class="fin-hamburger"
                                 type="button"
-                                @click=${u}
+                                @click=${p}
                                 aria-label="Toggle navigation menu"
                             >
                                 &#9776;
@@ -754,7 +754,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                             <button
                                 class="fin-icon-btn"
                                 type="button"
-                                @click=${d}
+                                @click=${m}
                                 aria-label="Open notifications"
                             >
                                 &#128276;
@@ -894,7 +894,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},v=e=>{let t=e.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);t&&t.removeAttribute(`left-drawer-open`)},y={parameters:{layout:`fullscreen`},render:()=>t`
+    `},x=e=>{let t=e.currentTarget.closest(`.story-app`)?.querySelector(`cosmoz-drawer-layout`);t&&t.removeAttribute(`left-drawer-open`)},S={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .invoice-story {
                 position: absolute;
@@ -1550,7 +1550,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
         </style>
 
         <div class="story-app invoice-story">
-            <cosmoz-drawer-layout breakpoint="1200" @close=${c}>
+            <cosmoz-drawer-layout breakpoint="1200" @close=${d}>
                 <cosmoz-side-panel slot="left" bordered>
                     <div class="inv-doc-viewer">
                         <div class="inv-doc-header">
@@ -1558,7 +1558,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                             <button
                                 class="inv-doc-close"
                                 type="button"
-                                @click=${v}
+                                @click=${x}
                                 aria-label="Close document viewer"
                             >
                                 &#10005;
@@ -1706,14 +1706,14 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                         <button
                             class="inv-btn inv-btn-secondary"
                             type="button"
-                            @click=${u}
+                            @click=${p}
                         >
                             &#128196; View Document
                         </button>
                         <button
                             class="inv-btn inv-btn-secondary"
                             type="button"
-                            @click=${d}
+                            @click=${m}
                         >
                             &#128340; History
                         </button>
@@ -1831,7 +1831,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},b={parameters:{layout:`fullscreen`},render:()=>t`
+    `},C={parameters:{layout:`fullscreen`},render:()=>t`
         <style>
             .pizza-story {
                 position: absolute;
@@ -2204,7 +2204,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
         </style>
 
         <div class="story-app pizza-story">
-            <cosmoz-drawer-layout @close=${c}>
+            <cosmoz-drawer-layout @close=${d}>
                 <cosmoz-side-panel slot="left">
                     <aside class="pizza-menu" aria-label="Order menu">
                         <section class="pizza-restaurant">
@@ -2264,14 +2264,14 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                             <button
                                 class="pizza-button-secondary"
                                 type="button"
-                                @click=${u}
+                                @click=${p}
                             >
                                 Order menu
                             </button>
                             <button
                                 class="pizza-button"
                                 type="button"
-                                @click=${d}
+                                @click=${m}
                             >
                                 Show map
                             </button>
@@ -2377,16 +2377,24 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
                 </cosmoz-side-panel>
             </cosmoz-drawer-layout>
         </div>
-    `},p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+    `},w={render:()=>t` <cosmoz-drawer-layout
+            breakpoint="10000"
+            left-drawer-open
+            style="width: 320px; height: 400px; --cosmoz-drawer-layout-left-drawer-width: 240px; --cosmoz-drawer-layout-right-drawer-width: 240px;"
+        >
+            <nav slot="left"><button>Open invoices</button></nav>
+            <div style="position: absolute; inset: 0">Workspace</div>
+            <aside slot="right"><button>Close assistant</button></aside>
+        </cosmoz-drawer-layout>`,play:async({canvasElement:e})=>{let t=e.querySelector(`cosmoz-drawer-layout`),n=t.querySelector(`nav button`),r=t.querySelector(`aside button`),i=e=>{let t=e.getBoundingClientRect(),n=t.x+t.width/2,r=t.y+t.height/2,i=document.elementFromPoint(n,r);for(;i?.shadowRoot;){let e=i.shadowRoot.elementFromPoint(n,r);if(!e||e===i)break;i=e}return i};await l(()=>o(i(n)).toBe(n)),await c.click(n),t.removeAttribute(`left-drawer-open`),t.setAttribute(`right-drawer-open`,``),await l(()=>o(i(r)).toBe(r)),await c.click(r),await l(()=>o(t.shadowRoot.querySelector(`[part="left-drawer"]`)).toHaveAttribute(`inert`))}},g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
   render: renderBasic
-}`,...p.parameters?.docs?.source}}},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+}`,...g.parameters?.docs?.source}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
   args: {
     breakpoint: 0,
     leftDrawerOpen: true,
     rightDrawerOpen: false
   },
   render: renderBasic
-}`,...m.parameters?.docs?.source}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
+}`,..._.parameters?.docs?.source}}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -3271,7 +3279,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,..._.parameters?.docs?.source}}},y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
+}`,...b.parameters?.docs?.source}}},S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -4213,7 +4221,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...y.parameters?.docs?.source}}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+}`,...S.parameters?.docs?.source}}},C.parameters={...C.parameters,docs:{...C.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -4764,16 +4772,52 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...b.parameters?.docs?.source}}},x=[`Default`,`AlwaysSideMode`,`FinanceDashboard`,`InvoiceOverview`,`PizzaOrderMap`],p.parameters={...p.parameters,docs:{...p.parameters?.docs,source:{originalSource:`{
+}`,...C.parameters?.docs?.source}}},w.parameters={...w.parameters,docs:{...w.parameters?.docs,source:{originalSource:`{
+  render: () => html\` <cosmoz-drawer-layout
+            breakpoint="10000"
+            left-drawer-open
+            style="width: 320px; height: 400px; --cosmoz-drawer-layout-left-drawer-width: 240px; --cosmoz-drawer-layout-right-drawer-width: 240px;"
+        >
+            <nav slot="left"><button>Open invoices</button></nav>
+            <div style="position: absolute; inset: 0">Workspace</div>
+            <aside slot="right"><button>Close assistant</button></aside>
+        </cosmoz-drawer-layout>\`,
+  play: async ({
+    canvasElement
+  }) => {
+    const drawer = canvasElement.querySelector('cosmoz-drawer-layout')!;
+    const left = drawer.querySelector<HTMLButtonElement>('nav button')!;
+    const right = drawer.querySelector<HTMLButtonElement>('aside button')!;
+    const hit = (button: HTMLButtonElement) => {
+      const rect = button.getBoundingClientRect();
+      const x = rect.x + rect.width / 2;
+      const y = rect.y + rect.height / 2;
+      let element = document.elementFromPoint(x, y);
+      while (element?.shadowRoot) {
+        const inner = element.shadowRoot.elementFromPoint(x, y);
+        if (!inner || inner === element) break;
+        element = inner;
+      }
+      return element;
+    };
+    await waitFor(() => expect(hit(left)).toBe(left));
+    await userEvent.click(left);
+    drawer.removeAttribute('left-drawer-open');
+    drawer.setAttribute('right-drawer-open', '');
+    await waitFor(() => expect(hit(right)).toBe(right));
+    await userEvent.click(right);
+    await waitFor(() => expect(drawer.shadowRoot!.querySelector('[part="left-drawer"]')).toHaveAttribute('inert'));
+  }
+}`,...w.parameters?.docs?.source},description:{story:`Drawer content must receive pointer hits ahead of the workspace backdrop.`,...w.parameters?.docs?.description}}},T=[`Default`,`AlwaysSideMode`,`FinanceDashboard`,`InvoiceOverview`,`PizzaOrderMap`,`OverlayInteraction`],g.parameters={...g.parameters,docs:{...g.parameters?.docs,source:{originalSource:`{
   render: renderBasic
-}`,...p.parameters?.docs?.source}}},m.parameters={...m.parameters,docs:{...m.parameters?.docs,source:{originalSource:`{
+}`,...g.parameters?.docs?.source}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
   args: {
     breakpoint: 0,
     leftDrawerOpen: true,
     rightDrawerOpen: false
   },
   render: renderBasic
-}`,...m.parameters?.docs?.source}}},_.parameters={..._.parameters,docs:{..._.parameters?.docs,source:{originalSource:`{
+}`,..._.parameters?.docs?.source}}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -5658,7 +5702,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,..._.parameters?.docs?.source}}},y.parameters={...y.parameters,docs:{...y.parameters?.docs,source:{originalSource:`{
+}`,...b.parameters?.docs?.source}}},S.parameters={...S.parameters,docs:{...S.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -6600,7 +6644,7 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...y.parameters?.docs?.source}}},b.parameters={...b.parameters,docs:{...b.parameters?.docs,source:{originalSource:`{
+}`,...S.parameters?.docs?.source}}},C.parameters={...C.parameters,docs:{...C.parameters?.docs,source:{originalSource:`{
   parameters: {
     layout: 'fullscreen'
   },
@@ -7151,4 +7195,40 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--u
             </cosmoz-drawer-layout>
         </div>
     \`
-}`,...b.parameters?.docs?.source}}}}))();export{m as AlwaysSideMode,p as Default,_ as FinanceDashboard,y as InvoiceOverview,b as PizzaOrderMap,x as __namedExportsOrder,s as default};
+}`,...C.parameters?.docs?.source}}},w.parameters={...w.parameters,docs:{...w.parameters?.docs,source:{originalSource:`{
+  render: () => html\` <cosmoz-drawer-layout
+            breakpoint="10000"
+            left-drawer-open
+            style="width: 320px; height: 400px; --cosmoz-drawer-layout-left-drawer-width: 240px; --cosmoz-drawer-layout-right-drawer-width: 240px;"
+        >
+            <nav slot="left"><button>Open invoices</button></nav>
+            <div style="position: absolute; inset: 0">Workspace</div>
+            <aside slot="right"><button>Close assistant</button></aside>
+        </cosmoz-drawer-layout>\`,
+  play: async ({
+    canvasElement
+  }) => {
+    const drawer = canvasElement.querySelector('cosmoz-drawer-layout')!;
+    const left = drawer.querySelector<HTMLButtonElement>('nav button')!;
+    const right = drawer.querySelector<HTMLButtonElement>('aside button')!;
+    const hit = (button: HTMLButtonElement) => {
+      const rect = button.getBoundingClientRect();
+      const x = rect.x + rect.width / 2;
+      const y = rect.y + rect.height / 2;
+      let element = document.elementFromPoint(x, y);
+      while (element?.shadowRoot) {
+        const inner = element.shadowRoot.elementFromPoint(x, y);
+        if (!inner || inner === element) break;
+        element = inner;
+      }
+      return element;
+    };
+    await waitFor(() => expect(hit(left)).toBe(left));
+    await userEvent.click(left);
+    drawer.removeAttribute('left-drawer-open');
+    drawer.setAttribute('right-drawer-open', '');
+    await waitFor(() => expect(hit(right)).toBe(right));
+    await userEvent.click(right);
+    await waitFor(() => expect(drawer.shadowRoot!.querySelector('[part="left-drawer"]')).toHaveAttribute('inert'));
+  }
+}`,...w.parameters?.docs?.source},description:{story:`Drawer content must receive pointer hits ahead of the workspace backdrop.`,...w.parameters?.docs?.description}}}}))();export{_ as AlwaysSideMode,g as Default,b as FinanceDashboard,S as InvoiceOverview,w as OverlayInteraction,C as PizzaOrderMap,T as __namedExportsOrder,u as default};

@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe--uqrdHD7.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-u6w0DMEu.js";var o,s,c,l,u,d;e((()=>{n(),i(),r(),a(),o={title:`SidePanel`,component:`cosmoz-side-panel`,tags:[`autodocs`],args:{}},s={render:()=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cvl9in-S.js";import{i as n,n as r,r as i,t as a}from"./cosmoz-side-panel-BlBSs-aN.js";var o,s,c,l,u,d;e((()=>{n(),i(),r(),a(),o={title:`SidePanel`,component:`cosmoz-side-panel`,tags:[`autodocs`],args:{}},s={render:()=>t`
         <div style="width: 300px; height: 400px; border: 1px solid #ddd;">
             <cosmoz-side-panel>
                 <div style="padding: 16px;">Panel Content</div>
