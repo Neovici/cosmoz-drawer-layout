@@ -11,3 +11,5 @@ storybook-static/
 codecov
 codecov.SHA256SUM
 codecov.SHA256SUM.sig
+.vitest-attachments/
+test/__screenshots__/

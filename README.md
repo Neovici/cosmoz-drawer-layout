@@ -46,12 +46,46 @@ A responsive layout with left and right drawer slots that switch between **side 
 | `breakpoint`        | `string` | `1460`  | Viewport width (px) for side/overlay switch. `0` = always side mode. |
 | `left-drawer-open`  | boolean  | —       | Opens the left drawer (overlay mode).                                |
 | `right-drawer-open` | boolean  | —       | Opens the right drawer (overlay mode).                               |
+| `swipe-to-close`    | `"down"` | —       | Enables downward drag dismissal from marked handles in overlay mode. |
 
 ### Events
 
-| Event   | Detail | Description                                                                                                |
-| ------- | ------ | ---------------------------------------------------------------------------------------------------------- |
-| `close` | —      | Fired when the backdrop is clicked in overlay mode. Set `left-drawer-open`/`right-drawer-open` to `false`. |
+| Event   | Detail | Description                                                                                                                       |
+| ------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `close` | —      | Fired when the backdrop is clicked or a swipe dismisses an overlay drawer. Set `left-drawer-open`/`right-drawer-open` to `false`. |
+
+### Bottom sheets with swipe dismissal
+
+Opt in with `swipe-to-close="down"` and mark the sheet header with
+`data-drawer-drag-handle`. The marker can be inside a slotted component's open
+shadow root. Apply `touch-action: none`, `-webkit-user-select: none`, and
+`user-select: none` to that header only. Content outside it keeps native scrolling
+and text selection. Buttons, links, editable fields and other focusable controls
+inside the header keep their normal interactions.
+
+```html
+<cosmoz-drawer-layout swipe-to-close="down" left-drawer-open>
+	<section slot="left">
+		<header
+			data-drawer-drag-handle
+			style="touch-action: none; -webkit-user-select: none; user-select: none"
+		>
+			Menu
+			<button>Close</button>
+		</header>
+		<nav>...</nav>
+	</section>
+	<main>...</main>
+</cosmoz-drawer-layout>
+```
+
+The consumer styles the drawer parts as bottom sheets, including a `transform`
+transition for opening and closing. Drag feedback uses the independent `translate`
+property, which the component reserves while a gesture is active. On dismissal,
+handle `close` by clearing the open attribute, just as for backdrop dismissal.
+Short, upward and horizontal drags do not dismiss the drawer. Interrupted gestures
+snap back. Dismissal is disabled in side mode and respects reduced motion.
+Keep an accessible Close button as an alternative to the gesture.
 
 ### Slots
 

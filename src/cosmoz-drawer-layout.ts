@@ -1,10 +1,12 @@
 import { useStyleSheet } from '@neovici/cosmoz-utils/hooks/use-stylesheet';
 import { component, css, html } from '@pionjs/pion';
+import { useSwipeToClose } from './use-swipe-to-close';
 
 type Props = {
 	breakpoint?: string;
 	leftDrawerOpen?: boolean;
 	rightDrawerOpen?: boolean;
+	swipeToClose?: string;
 };
 
 const parseBreakpoint = (value: string | undefined, fallback: number) => {
@@ -29,8 +31,9 @@ const sideModeRules = `
 	}
 `;
 
-const CosmozDrawerLayout = (host: Element & Props) => {
+const CosmozDrawerLayout = (host: HTMLElement & Props) => {
 	const breakpoint = parseBreakpoint(host.breakpoint, 1460);
+	useSwipeToClose(host, host.swipeToClose);
 
 	useStyleSheet(css`
 		${breakpoint > 0
@@ -208,7 +211,12 @@ customElements.define(
 	'cosmoz-drawer-layout',
 	component(CosmozDrawerLayout, {
 		styleSheets: [style],
-		observedAttributes: ['breakpoint', 'left-drawer-open', 'right-drawer-open'],
+		observedAttributes: [
+			'breakpoint',
+			'left-drawer-open',
+			'right-drawer-open',
+			'swipe-to-close',
+		],
 	}),
 );
 
