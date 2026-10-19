@@ -44,12 +44,13 @@ export const swipeToClose = (host: HTMLElement) => {
 			return;
 		}
 		// translate composes with the consumer's open/close transform transition.
-		animation = panel.animate(
+		const settling = panel.animate(
 			[{ translate: `0 ${offset}px` }, { translate: '0 0' }],
 			{ duration: 180, easing: 'cubic-bezier(.2, .8, .2, 1)' },
 		);
-		animation.onfinish = () => {
-			animation = undefined;
+		animation = settling;
+		settling.onfinish = () => {
+			if (animation === settling) animation = undefined;
 		};
 	};
 
@@ -156,7 +157,7 @@ export const swipeToClose = (host: HTMLElement) => {
 		attributeFilter: ['left-drawer-open', 'right-drawer-open', 'breakpoint'],
 	});
 	const resize = new ResizeObserver(() => {
-		if (gesture) reset();
+		if (gesture || animation) reset();
 	});
 	resize.observe(host);
 	const options = { signal: events.signal };
