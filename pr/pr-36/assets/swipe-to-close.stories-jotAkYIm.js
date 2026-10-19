@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-BbCLH1SG.js";import{n,s as r,t as i}from"./cosmoz-drawer-layout-DrMfynRC.js";var a,o,s;e((()=>{r(),n(),i(),a={title:`DrawerLayout/Swipe to close`,tags:[`autodocs`]},o={render:()=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-CfRnXZuw.js";import{n,s as r,t as i}from"./cosmoz-drawer-layout-CiJjPLDE.js";var a,o,s;e((()=>{r(),n(),i(),a={title:`DrawerLayout/Swipe to close`,tags:[`autodocs`]},o={render:()=>t`
         <style>
             .swipe-demo {
                 width: 360px;
