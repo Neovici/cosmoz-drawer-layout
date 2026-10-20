@@ -1,4 +1,4 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-CfRnXZuw.js";import{a as n,n as r,r as i}from"./cosmoz-drawer-layout-CiJjPLDE.js";var a,o,s=e((()=>{r(),a=()=>t`<div class="wrapper" part="panel"><slot></slot></div>`,o=n`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-BUAwEfD1.js";import{a as n,n as r,r as i}from"./cosmoz-drawer-layout-C4VoBUM0.js";var a,o,s=e((()=>{r(),a=()=>t`<div class="wrapper" part="panel"><slot></slot></div>`,o=n`
 	:host {
 		display: block;
 		box-sizing: border-box;

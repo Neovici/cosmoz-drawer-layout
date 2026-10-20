@@ -1,9 +1,8 @@
-import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-CfRnXZuw.js";import{n,s as r,t as i}from"./cosmoz-drawer-layout-CiJjPLDE.js";var a,o,s;e((()=>{r(),n(),i(),a={title:`DrawerLayout/Swipe to close`,tags:[`autodocs`]},o={render:()=>t`
+import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-BUAwEfD1.js";import{n,s as r,t as i}from"./cosmoz-drawer-layout-C4VoBUM0.js";var a,o,s;e((()=>{r(),n(),i(),a={title:`DrawerLayout/Swipe to close`,tags:[`autodocs`],parameters:{layout:`fullscreen`}},o={render:()=>t`
         <style>
             .swipe-demo {
-                width: 360px;
-                max-width: 100%;
-                height: 580px;
+                width: 100%;
+                height: 100dvh;
                 font-family: var(--cz-font-body);
                 color: var(--cz-color-text-primary);
                 background: var(--cz-color-bg-primary);
@@ -16,8 +15,12 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
                 transform: translateY(100%);
                 visibility: hidden;
                 transition:
-                    transform 220ms,
-                    visibility 220ms;
+                    transform var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+                    visibility var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+                    display var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+                        allow-discrete,
+                    overlay var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+                        allow-discrete;
                 border-radius: var(--cz-radius-4xl) var(--cz-radius-4xl) 0 0;
                 background: var(--cz-glass-sheen), var(--cz-color-bg-primary);
                 box-shadow: var(--cz-shadow-glass);
@@ -87,6 +90,8 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
             class="swipe-demo"
             breakpoint="10000"
             swipe-to-close="down"
+            modal-overlay
+            left-drawer-label="Menu"
             left-drawer-open
             @close=${e=>e.currentTarget.removeAttribute(`left-drawer-open`)}
         >
@@ -123,9 +128,8 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
   render: () => html\`
         <style>
             .swipe-demo {
-                width: 360px;
-                max-width: 100%;
-                height: 580px;
+                width: 100%;
+                height: 100dvh;
                 font-family: var(--cz-font-body);
                 color: var(--cz-color-text-primary);
                 background: var(--cz-color-bg-primary);
@@ -138,8 +142,12 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
                 transform: translateY(100%);
                 visibility: hidden;
                 transition:
-                    transform 220ms,
-                    visibility 220ms;
+                    transform var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+                    visibility var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+                    display var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+                        allow-discrete,
+                    overlay var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+                        allow-discrete;
                 border-radius: var(--cz-radius-4xl) var(--cz-radius-4xl) 0 0;
                 background: var(--cz-glass-sheen), var(--cz-color-bg-primary);
                 box-shadow: var(--cz-shadow-glass);
@@ -209,6 +217,8 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
             class="swipe-demo"
             breakpoint="10000"
             swipe-to-close="down"
+            modal-overlay
+            left-drawer-label="Menu"
             left-drawer-open
             @close=\${(event: Event) => (event.currentTarget as HTMLElement).removeAttribute('left-drawer-open')}
         >
@@ -248,9 +258,8 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
   render: () => html\`
         <style>
             .swipe-demo {
-                width: 360px;
-                max-width: 100%;
-                height: 580px;
+                width: 100%;
+                height: 100dvh;
                 font-family: var(--cz-font-body);
                 color: var(--cz-color-text-primary);
                 background: var(--cz-color-bg-primary);
@@ -263,8 +272,12 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
                 transform: translateY(100%);
                 visibility: hidden;
                 transition:
-                    transform 220ms,
-                    visibility 220ms;
+                    transform var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+                    visibility var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+                    display var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+                        allow-discrete,
+                    overlay var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+                        allow-discrete;
                 border-radius: var(--cz-radius-4xl) var(--cz-radius-4xl) 0 0;
                 background: var(--cz-glass-sheen), var(--cz-color-bg-primary);
                 box-shadow: var(--cz-shadow-glass);
@@ -334,6 +347,8 @@ import{i as e}from"./preload-helper-usAeo7Bx.js";import{pt as t}from"./iframe-Cf
             class="swipe-demo"
             breakpoint="10000"
             swipe-to-close="down"
+            modal-overlay
+            left-drawer-label="Menu"
             left-drawer-open
             @close=\${(event: Event) => (event.currentTarget as HTMLElement).removeAttribute('left-drawer-open')}
         >
