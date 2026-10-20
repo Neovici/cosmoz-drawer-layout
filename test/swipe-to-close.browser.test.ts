@@ -70,6 +70,41 @@ afterEach(async () => {
 });
 
 describe('downward drawer dismissal', () => {
+	it('dismisses a short fast flick but returns a slow or held drag', async () => {
+		await commands.dragHeader(grip(), 0, 65, { durationMs: 500 });
+		expect(closed).not.toHaveBeenCalled();
+		await expect.poll(() => panel().getAnimations().length).toBe(0);
+		await commands.dragHeader(grip(), 0, 65, { release: false });
+		await commands.releasePointer(150);
+		expect(closed).not.toHaveBeenCalled();
+		await expect.poll(() => panel().getAnimations().length).toBe(0);
+		await commands.dragHeader(grip(), 0, 65);
+		expect(closed).toHaveBeenCalledOnce();
+	});
+
+	it('fades the backdrop with the drag and restores it on cancellation', async () => {
+		const backdrop =
+			drawer.shadowRoot!.querySelector<HTMLElement>('.click-layer')!;
+		await commands.dragHeader(grip(), 0, 100, { release: false });
+		expect(parseFloat(getComputedStyle(backdrop).opacity)).toBeCloseTo(
+			1 - 100 / panel().offsetHeight,
+			2,
+		);
+		await commands.releasePointer(150);
+		await expect.poll(() => getComputedStyle(backdrop).opacity).toBe('1');
+		expect(closed).not.toHaveBeenCalled();
+	});
+
+	it('allows a consumer to cancel flick dismissal', async () => {
+		drawer.removeEventListener('close', closed);
+		drawer.addEventListener('close', (event) => event.preventDefault(), {
+			once: true,
+		});
+		await commands.dragHeader(grip(), 0, 65);
+		await expect.poll(() => panel().getAnimations().length).toBe(0);
+		expect(drawer.hasAttribute('left-drawer-open')).toBe(true);
+		expect(panel().style.translate).toBe('');
+	});
 	it('requires opt-in and releases an active drag when disabled', async () => {
 		await commands.dragHeader(grip(), 0, 100, { release: false });
 		drawer.removeAttribute('swipe-to-close');
