@@ -1,4 +1,5 @@
 import { useEffect } from '@pionjs/pion';
+import { swipeFeedback } from './swipe-feedback';
 
 const controls = [
 	'a',
@@ -19,14 +20,18 @@ type Gesture = {
 	x: number;
 	y: number;
 	offset: number;
+	lastY: number;
+	lastTime: number;
+	lastMovingTime: number;
+	velocity: number;
 };
 
 /** Downward dismissal from an explicitly marked header, including slotted shadow trees. */
 export const swipeToClose = (host: HTMLElement) => {
 	const root = host.shadowRoot!;
 	const events = new AbortController();
+	const feedback = swipeFeedback(host);
 	let gesture: Gesture | undefined;
-	let animation: Animation | undefined;
 
 	const isOpen = (panel: HTMLElement) =>
 		host.hasAttribute(
@@ -38,22 +43,6 @@ export const swipeToClose = (host: HTMLElement) => {
 		getComputedStyle(panel).getPropertyValue('--_drawer-mode').trim() ===
 		'overlay';
 
-	const settle = (panel: HTMLElement, offset: number) => {
-		panel.style.removeProperty('translate');
-		if (!offset || matchMedia('(prefers-reduced-motion: reduce)').matches) {
-			return;
-		}
-		// translate composes with the consumer's open/close transform transition.
-		const settling = panel.animate(
-			[{ translate: `0 ${offset}px` }, { translate: '0 0' }],
-			{ duration: 180, easing: 'cubic-bezier(.2, .8, .2, 1)' },
-		);
-		animation = settling;
-		settling.onfinish = () => {
-			if (animation === settling) animation = undefined;
-		};
-	};
-
 	const release = () => {
 		const current = gesture;
 		gesture = undefined;
@@ -64,7 +53,7 @@ export const swipeToClose = (host: HTMLElement) => {
 	};
 	const cancel = () => {
 		const current = release();
-		if (current) settle(current.panel, current.offset);
+		if (current) feedback.finish(current.offset);
 	};
 	const down = (event: PointerEvent) => {
 		if (!event.isPrimary || event.button !== 0 || gesture) return;
@@ -88,18 +77,17 @@ export const swipeToClose = (host: HTMLElement) => {
 				node.classList.contains('side'),
 		);
 		if (!panel || !isOpen(panel) || !overlay(panel)) return;
-		const offset = animation
-			? parseFloat(getComputedStyle(panel).translate.split(' ')[1]) || 0
-			: 0;
-		animation?.cancel();
-		animation = undefined;
-		panel.style.translate = `0 ${offset}px`;
+		const offset = feedback.begin(panel);
 		gesture = {
 			panel,
 			pointerId: event.pointerId,
 			x: event.clientX,
 			y: event.clientY - offset,
 			offset,
+			lastY: event.clientY,
+			lastTime: event.timeStamp,
+			lastMovingTime: event.timeStamp,
+			velocity: 0,
 		};
 		panel.setPointerCapture(event.pointerId);
 	};
@@ -113,32 +101,47 @@ export const swipeToClose = (host: HTMLElement) => {
 			return;
 		}
 		gesture.offset = Math.max(0, Math.min(dy, gesture.panel.offsetHeight));
-		gesture.panel.style.translate = `0 ${gesture.offset}px`;
+		const displacement = event.clientY - gesture.lastY;
+		if (Math.abs(displacement) >= 1) {
+			gesture.velocity =
+				displacement / Math.max(8, event.timeStamp - gesture.lastTime);
+			gesture.lastMovingTime = event.timeStamp;
+		}
+		gesture.lastTime = event.timeStamp;
+		gesture.lastY = event.clientY;
+		feedback.move(gesture.offset);
 	};
 	const up = (event: PointerEvent) => {
 		if (!gesture || event.pointerId !== gesture.pointerId) return;
+		move(event);
+		if (!gesture) return;
 		const current = release()!;
-		settle(current.panel, current.offset);
+		const velocity =
+			event.timeStamp - current.lastMovingTime <= 80 ? current.velocity : 0;
 		const threshold = Math.min(
 			160,
 			Math.max(80, current.panel.offsetHeight / 4),
 		);
 		if (
-			current.offset >= threshold &&
+			(current.offset >= threshold ||
+				(current.offset >= 48 && velocity >= 0.5)) &&
 			isOpen(current.panel) &&
 			overlay(current.panel)
 		) {
-			host.dispatchEvent(new CustomEvent('close'));
+			const accepted = host.dispatchEvent(
+				new CustomEvent('close', { cancelable: true }),
+			);
+			feedback.finish(current.offset, accepted, velocity);
+			return;
 		}
+		feedback.finish(current.offset);
 	};
 	const interrupted = (event: PointerEvent) => {
 		if (event.pointerId === gesture?.pointerId) cancel();
 	};
 	const reset = () => {
-		const current = release();
-		current?.panel.style.removeProperty('translate');
-		animation?.cancel();
-		animation = undefined;
+		release();
+		feedback.reset();
 	};
 	const observer = new MutationObserver((records) => {
 		if (gesture && !isOpen(gesture.panel)) cancel();
@@ -157,7 +160,7 @@ export const swipeToClose = (host: HTMLElement) => {
 		attributeFilter: ['left-drawer-open', 'right-drawer-open', 'breakpoint'],
 	});
 	const resize = new ResizeObserver(() => {
-		if (gesture || animation) reset();
+		if (gesture || feedback.active) reset();
 	});
 	resize.observe(host);
 	const options = { signal: events.signal };

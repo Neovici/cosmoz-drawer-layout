@@ -10,7 +10,8 @@ export const gestureCommands = {
 			{
 				release = true,
 				touch = false,
-			}: { release?: boolean; touch?: boolean } = {},
+				durationMs = 0,
+			}: { release?: boolean; touch?: boolean; durationMs?: number } = {},
 		) => {
 			const box = await iframe.locator(selector).boundingBox();
 			if (!box) throw new Error(`No visible drag target: ${selector}`);
@@ -46,11 +47,19 @@ export const gestureCommands = {
 			}
 			await page.mouse.move(x, y);
 			await page.mouse.down();
-			await page.mouse.move(x + dx * scale, y + dy * scale, { steps: 10 });
+			const steps = durationMs ? 10 : 2;
+			for (let step = 1; step <= steps; step++) {
+				await page.mouse.move(
+					x + (dx * scale * step) / steps,
+					y + (dy * scale * step) / steps,
+				);
+				if (durationMs) await page.waitForTimeout(durationMs / 10);
+			}
 			if (release) await page.mouse.up();
 		},
 	),
-	releasePointer: defineBrowserCommand(async ({ page }) => {
+	releasePointer: defineBrowserCommand(async ({ page }, holdMs: number = 0) => {
+		if (holdMs) await page.waitForTimeout(holdMs);
 		await page.mouse.up();
 	}),
 	reducedMotion: defineBrowserCommand(async ({ page }, reduce: boolean) => {
@@ -66,9 +75,9 @@ declare module 'vitest/browser' {
 			selector: string,
 			dx: number,
 			dy: number,
-			options?: { release?: boolean; touch?: boolean },
+			options?: { release?: boolean; touch?: boolean; durationMs?: number },
 		): Promise<void>;
-		releasePointer(): Promise<void>;
+		releasePointer(holdMs?: number): Promise<void>;
 		reducedMotion(reduce: boolean): Promise<void>;
 	}
 }

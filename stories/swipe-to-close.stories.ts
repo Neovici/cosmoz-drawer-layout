@@ -28,8 +28,12 @@ export const BottomSheet: StoryObj = {
 				transform: translateY(100%);
 				visibility: hidden;
 				transition:
-					transform 220ms,
-					visibility 220ms;
+					transform var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+					visibility var(--cosmoz-drawer-layout-swipe-duration, 220ms),
+					display var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+						allow-discrete,
+					overlay var(--cosmoz-drawer-layout-swipe-duration, 220ms)
+						allow-discrete;
 				border-radius: var(--cz-radius-4xl) var(--cz-radius-4xl) 0 0;
 				background: var(--cz-glass-sheen), var(--cz-color-bg-primary);
 				box-shadow: var(--cz-shadow-glass);
@@ -99,6 +103,8 @@ export const BottomSheet: StoryObj = {
 			class="swipe-demo"
 			breakpoint="10000"
 			swipe-to-close="down"
+			modal-overlay
+			left-drawer-label="Menu"
 			left-drawer-open
 			@close=${(event: Event) =>
 				(event.currentTarget as HTMLElement).removeAttribute(
