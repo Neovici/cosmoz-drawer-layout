@@ -6,6 +6,7 @@ import '../src/cosmoz-drawer-layout';
 const meta: Meta = {
 	title: 'DrawerLayout/Swipe to close',
 	tags: ['autodocs'],
+	parameters: { layout: 'fullscreen' },
 };
 export default meta;
 
@@ -13,9 +14,8 @@ export const BottomSheet: StoryObj = {
 	render: () => html`
 		<style>
 			.swipe-demo {
-				width: 360px;
-				max-width: 100%;
-				height: 580px;
+				width: 100%;
+				height: 100dvh;
 				font-family: var(--cz-font-body);
 				color: var(--cz-color-text-primary);
 				background: var(--cz-color-bg-primary);
