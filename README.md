@@ -41,17 +41,87 @@ A responsive layout with left and right drawer slots that switch between **side 
 
 ### Attributes
 
-| Attribute           | Type     | Default | Description                                                          |
-| ------------------- | -------- | ------- | -------------------------------------------------------------------- |
-| `breakpoint`        | `string` | `1460`  | Viewport width (px) for side/overlay switch. `0` = always side mode. |
-| `left-drawer-open`  | boolean  | —       | Opens the left drawer (overlay mode).                                |
-| `right-drawer-open` | boolean  | —       | Opens the right drawer (overlay mode).                               |
+| Attribute            | Type     | Default | Description                                                                                                   |
+| -------------------- | -------- | ------- | ------------------------------------------------------------------------------------------------------------- |
+| `breakpoint`         | `string` | `1460`  | Viewport width (px) for side/overlay switch. `0` = always side mode.                                          |
+| `left-drawer-open`   | boolean  | —       | Opens the left drawer (overlay mode).                                                                         |
+| `right-drawer-open`  | boolean  | —       | Opens the right drawer (overlay mode).                                                                        |
+| `swipe-to-close`     | `"down"` | —       | Enables downward drag dismissal from marked handles in overlay mode.                                          |
+| `modal-overlay`      | boolean  | —       | Uses native modal dialogs in overlay mode, with background inertness, focus containment and Escape dismissal. |
+| `left-drawer-label`  | string   | —       | Accessible name of the left modal drawer. Supply a translated label.                                          |
+| `right-drawer-label` | string   | —       | Accessible name of the right modal drawer. Supply a translated label.                                         |
 
 ### Events
 
-| Event   | Detail | Description                                                                                                |
-| ------- | ------ | ---------------------------------------------------------------------------------------------------------- |
-| `close` | —      | Fired when the backdrop is clicked in overlay mode. Set `left-drawer-open`/`right-drawer-open` to `false`. |
+| Event   | Detail | Description                                                                                                                       |
+| ------- | ------ | --------------------------------------------------------------------------------------------------------------------------------- |
+| `close` | —      | Fired when the backdrop is clicked or a swipe dismisses an overlay drawer. Set `left-drawer-open`/`right-drawer-open` to `false`. |
+
+### Bottom sheets with swipe dismissal
+
+Opt in with `swipe-to-close="down"` and mark the sheet header with
+`data-drawer-drag-handle`. The marker can be inside a slotted component's open
+shadow root. Apply `touch-action: none`, `-webkit-user-select: none`, and
+`user-select: none` to that header only. Content outside it keeps native scrolling
+and text selection. Buttons, links, editable fields and other focusable controls
+inside the header keep their normal interactions.
+
+```html
+<cosmoz-drawer-layout swipe-to-close="down" left-drawer-open>
+	<section slot="left">
+		<header
+			data-drawer-drag-handle
+			style="touch-action: none; -webkit-user-select: none; user-select: none"
+		>
+			Menu
+			<button>Close</button>
+		</header>
+		<nav>...</nav>
+	</section>
+	<main>...</main>
+</cosmoz-drawer-layout>
+```
+
+The consumer styles the drawer parts as bottom sheets, including a `transform`
+transition for opening and closing. Drag feedback uses the independent `translate`
+property, which the component reserves while a gesture is active. On dismissal,
+handle `close` by clearing the open attribute, just as for backdrop dismissal.
+Slow short, upward and horizontal drags do not dismiss the drawer. A short downward
+flick can dismiss based on release velocity. Holding before release expires the
+flick velocity. Interrupted gestures snap back, and the backdrop follows drag
+progress. Consumers may prevent a swipe dismissal with `event.preventDefault()`
+on `close`. Dismissal is disabled in side mode and respects reduced motion.
+Keep an accessible Close button as an alternative to the gesture.
+
+### Modal overlays
+
+Add `modal-overlay` and supply `left-drawer-label` / `right-drawer-label` for each
+used drawer. Overlay panels use native `dialog.showModal()`, so background controls
+are inert, keyboard navigation stays out of the background, and Escape requests
+`close`. Focus returns to the opener after dismissal. Controls inside a nested
+dialog retain their own Escape behavior. Side-mode panels remain ordinary layout
+elements. Changing modes preserves the slotted content and its state.
+
+The native modal occupies the top layer; its backdrop covers the viewport. Style
+its background through `--cosmoz-drawer-layout-backdrop-color`. The `backdrop` part
+continues to represent the layout backdrop for non-modal overlays.
+
+For animated sheets, use the component's release duration for the transform and
+retain `display` and `overlay` through dismissal:
+
+```css
+cosmoz-drawer-layout::part(left-drawer),
+cosmoz-drawer-layout::part(right-drawer) {
+	transition:
+		transform var(--cosmoz-drawer-layout-swipe-duration, 220ms) ease,
+		display var(--cosmoz-drawer-layout-swipe-duration, 220ms) allow-discrete,
+		overlay var(--cosmoz-drawer-layout-swipe-duration, 220ms) allow-discrete;
+}
+```
+
+The component sets `--cosmoz-drawer-layout-swipe-duration` while releasing a drag
+and reserves `data-swiping` and `--_drawer-swipe-progress` on its panel parts.
+Consumers should disable sheet transitions for `prefers-reduced-motion: reduce`.
 
 ### Slots
 
