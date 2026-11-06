@@ -1,10 +1,17 @@
 import { useStyleSheet } from '@neovici/cosmoz-utils/hooks/use-stylesheet';
 import { component, css, html } from '@pionjs/pion';
+import { useModalOverlay } from './use-modal-overlay';
+import { useOverlayMode } from './use-overlay-mode';
+import { useSwipeToClose } from './use-swipe-to-close';
 
 type Props = {
 	breakpoint?: string;
 	leftDrawerOpen?: boolean;
 	rightDrawerOpen?: boolean;
+	swipeToClose?: string;
+	modalOverlay?: boolean;
+	leftDrawerLabel?: string;
+	rightDrawerLabel?: string;
 };
 
 const parseBreakpoint = (value: string | undefined, fallback: number) => {
@@ -29,7 +36,7 @@ const sideModeRules = `
 	}
 `;
 
-const CosmozDrawerLayout = (host: Element & Props) => {
+const CosmozDrawerLayout = (host: HTMLElement & Props) => {
 	const breakpoint = parseBreakpoint(host.breakpoint, 1460);
 
 	useStyleSheet(css`
@@ -37,36 +44,99 @@ const CosmozDrawerLayout = (host: Element & Props) => {
 			? `@container (min-width: ${breakpoint}px) {${sideModeRules}}`
 			: sideModeRules}
 	`);
+	const overlay = useOverlayMode(
+		host,
+		breakpoint,
+		host.hasAttribute('modal-overlay'),
+	);
+	const modal = host.hasAttribute('modal-overlay') && overlay;
+	useSwipeToClose(host, host.swipeToClose);
+	useModalOverlay(
+		host,
+		modal,
+		host.hasAttribute('left-drawer-open'),
+		host.hasAttribute('right-drawer-open'),
+	);
+	const panel = (side: 'left' | 'right') => {
+		const open = host.hasAttribute(`${side}-drawer-open`);
+		return modal
+			? html` <dialog
+					class="side side-${side}"
+					part="${side}-drawer"
+					?inert=${!open}
+					aria-label=${(side === 'left'
+						? host.leftDrawerLabel
+						: host.rightDrawerLabel) ?? ''}
+					closedby="any"
+					autofocus
+				>
+					<slot name=${side}></slot>
+				</dialog>`
+			: html` <div
+					class="side side-${side}"
+					part="${side}-drawer"
+					?inert=${!open}
+				>
+					<slot name=${side}></slot>
+				</div>`;
+	};
 
 	return html`
 		<div class="wrapper">
-			<div
-				class="side side-left"
-				part="left-drawer"
-				?inert=${!host.hasAttribute('left-drawer-open')}
-			>
-				<slot name="left"></slot>
-			</div>
+			${panel('left')}
 			<div class="main-wrapper">
 				<div
 					class="click-layer"
 					part="backdrop"
+					?hidden=${modal}
 					@click=${() => host.dispatchEvent(new CustomEvent('close'))}
 				></div>
 				<slot class="main" part="main"></slot>
 			</div>
-			<div
-				class="side side-right"
-				part="right-drawer"
-				?inert=${!host.hasAttribute('right-drawer-open')}
-			>
-				<slot name="right"></slot>
-			</div>
+			${panel('right')}
 		</div>
 	`;
 };
 
 const style = css`
+	dialog.side {
+		inset: auto;
+		top: 0;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		color: inherit;
+		max-height: none;
+		overflow: hidden;
+		transition:
+			display var(--cosmoz-drawer-layout-swipe-duration, 220ms) allow-discrete,
+			overlay var(--cosmoz-drawer-layout-swipe-duration, 220ms) allow-discrete;
+	}
+	dialog.side:not([open]) {
+		display: none;
+	}
+	dialog.side::backdrop {
+		background: var(--cosmoz-drawer-layout-backdrop-color, rgba(0, 0, 0, 0.3));
+		opacity: calc(1 - var(--_drawer-swipe-progress, 0));
+		transition: opacity var(--cosmoz-drawer-layout-swipe-duration, 180ms);
+	}
+	dialog.side:not([open])::backdrop {
+		opacity: 0;
+	}
+	dialog.side[data-swiping]::backdrop {
+		transition: none;
+	}
+	@starting-style {
+		dialog.side[open]::backdrop {
+			opacity: 0;
+		}
+	}
+	@media (prefers-reduced-motion: reduce) {
+		dialog.side,
+		dialog.side::backdrop {
+			transition: none;
+		}
+	}
 	.click-layer {
 		position: absolute;
 		z-index: 999;
@@ -79,7 +149,8 @@ const style = css`
 		opacity: 0;
 	}
 
-	:host(:is([left-drawer-open], [right-drawer-open])) .click-layer {
+	:host(:is([left-drawer-open], [right-drawer-open]))
+		.click-layer:not([hidden]) {
 		display: block;
 		opacity: 1;
 	}
@@ -208,7 +279,15 @@ customElements.define(
 	'cosmoz-drawer-layout',
 	component(CosmozDrawerLayout, {
 		styleSheets: [style],
-		observedAttributes: ['breakpoint', 'left-drawer-open', 'right-drawer-open'],
+		observedAttributes: [
+			'breakpoint',
+			'left-drawer-open',
+			'right-drawer-open',
+			'swipe-to-close',
+			'modal-overlay',
+			'left-drawer-label',
+			'right-drawer-label',
+		],
 	}),
 );
 
