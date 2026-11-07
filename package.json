@@ -1,6 +1,6 @@
 {
   "name": "@neovici/cosmoz-drawer-layout",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A drawer layout web component with responsive side/overlay modes",
   "keywords": [
     "web-components",
