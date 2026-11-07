@@ -150,7 +150,7 @@ const style = css`
 	}
 
 	:host(:is([left-drawer-open], [right-drawer-open]))
-		.click-layer:not([hidden]) {
+		.click-layer:where(:not([hidden])) {
 		display: block;
 		opacity: 1;
 	}
